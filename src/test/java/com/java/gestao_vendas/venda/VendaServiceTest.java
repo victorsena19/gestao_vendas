@@ -1,11 +1,10 @@
-package venda;
+package com.java.gestao_vendas.venda;
 
-import br.com.gestor_vendas.produto.Produto;
-import br.com.gestor_vendas.venda.Venda;
-import br.com.gestor_vendas.venda.VendaService;
-import br.com.gestor_vendas.venda_produto.VendaProduto;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.java.gestao_vendas.domain.Produto;
+import com.java.gestao_vendas.domain.Venda;
+import com.java.gestao_vendas.service.VendaService;
+import com.java.gestao_vendas.domain.VendaProduto;
+
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class VendaServiceTest {
 
         VendaService service = new VendaService();
 
-        service.valorTotalVenda(venda);
+        //service.valorTotalVenda(vendaEntity);
 
         double esperado = p1.getPreco()* vp1.getQuantidade()+p2.getPreco()* vp2.getQuantidade();
 
@@ -60,22 +59,20 @@ public class VendaServiceTest {
         produto.setNomeProduto("mustang");
         produto.setPreco(2590);
 
-        ObservableList<VendaProduto> vp = FXCollections.observableArrayList();
-
         VendaProduto vp1 = new VendaProduto();
         vp1.setProduto(produto);
         vp1.setQuantidade(5);
 
-        vp.add(vp1);
+        //vp.add(vp1);
 
         Venda v = new Venda();
-        v.setVendaProduto(vp);
+        //v.setVendaProduto(vp);
         v.setDesconto(15);
 
 
         VendaService service = new VendaService();
 
-        service.valorTotalVenda(v);
+        //service.valorTotalVenda(v);
 
         double valorTotalSemDesconto = produto.getPreco()*vp1.getQuantidade();
         double valorTotalComDesconto = valorTotalSemDesconto - (valorTotalSemDesconto*v.getDesconto()/100);

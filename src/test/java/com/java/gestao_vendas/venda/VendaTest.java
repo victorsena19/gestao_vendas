@@ -1,10 +1,8 @@
-package venda;
+package com.java.gestao_vendas.venda;
 
-import br.com.gestor_vendas.produto.Produto;
-import br.com.gestor_vendas.venda.Venda;
-import br.com.gestor_vendas.venda_produto.VendaProduto;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.java.gestao_vendas.domain.Produto;
+import com.java.gestao_vendas.domain.Venda;
+import com.java.gestao_vendas.domain.VendaProduto;
 import org.junit.Test;
 
 import java.util.ArrayList;

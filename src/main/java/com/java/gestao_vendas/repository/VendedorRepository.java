@@ -1,35 +1,23 @@
 package com.java.gestao_vendas.repository;
 
-import com.java.gestao_vendas.domain.Pedido;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import com.java.gestao_vendas.domain.Vendedor;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
-public class PedidoRepository {
+@Repository
+public interface VendedorRepository extends JpaRepository<Vendedor, Long> {
 
-    @PersistenceContext
-    private EntityManager em;
+    Optional<Vendedor> findById(Long id);
 
-    public List<Pedido> ListarPedidos() {
-        return em.createQuery("from Pedido").getResultList();
-    }
+    @Query("FROM Vendedor v WHERE LOWER(v.pessoa.nomePessoa) LIKE %:nome%")
+    List<Vendedor> getNome(@Param("nome") String nome);
 
-    public Pedido BuscarPedidoId(int id) {
-        return em.find(Pedido.class, id);
-    }
-
-    public void SalvarPedido(Pedido pedido) {
-        em.persist(pedido);
-    }
-
-    public void AlterarPedido(Pedido pedido) {
-        em.merge(pedido);
-
-    }
-
-    public void ExcluirPedido(Long id) {
-        em.remove(id);
-    }
-
+    @Query("FROM Vendedor v WHERE v.pessoa.cnpjCpf LIKE %:cpf%")
+    Optional<Vendedor> findByEmail(@Param("cpf") String cpf);
+    
 }

@@ -1,4 +1,4 @@
 package com.java.gestao_vendas.controller;
 
-public class CategoriaController {
+public class CupomFiscalController {
 }

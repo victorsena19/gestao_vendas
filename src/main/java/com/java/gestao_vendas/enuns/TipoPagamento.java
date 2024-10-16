@@ -1,4 +1,4 @@
-package br.com.gestor_vendas.venda;
+package com.java.gestao_vendas.enuns;
 
 public enum TipoPagamento {
     DEBITO,

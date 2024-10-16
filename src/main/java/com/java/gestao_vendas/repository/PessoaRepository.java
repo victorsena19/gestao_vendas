@@ -1,35 +1,28 @@
 package com.java.gestao_vendas.repository;
 
-import com.java.gestao_vendas.domain.Pedido;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import com.java.gestao_vendas.domain.Pessoa;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
-public class PedidoRepository {
+@Repository
+public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
-    @PersistenceContext
-    private EntityManager em;
+    Optional<Pessoa> findById(Long id);
 
-    public List<Pedido> ListarPedidos() {
-        return em.createQuery("from Pedido").getResultList();
-    }
+    @Query("FROM Pessoa p WHERE LOWER(p.nomePessoa) LIKE %:nome%")
+    List<Pessoa> getNome(@Param("nome") String nome);
 
-    public Pedido BuscarPedidoId(int id) {
-        return em.find(Pedido.class, id);
-    }
+    Optional<Pessoa> findBycnpjCpf(String cnpjCpf);
 
-    public void SalvarPedido(Pedido pedido) {
-        em.persist(pedido);
-    }
+    @Query("FROM Pessoa p WHERE p.email LIKE %:email%")
+    List<Pessoa> getEmail(@Param("email") String email);
 
-    public void AlterarPedido(Pedido pedido) {
-        em.merge(pedido);
-
-    }
-
-    public void ExcluirPedido(Long id) {
-        em.remove(id);
-    }
-
+    List<Pessoa> findByDataNascimento(LocalDateTime dataNascimento);
 }

@@ -1,35 +1,19 @@
 package com.java.gestao_vendas.repository;
 
-import com.java.gestao_vendas.domain.Pedido;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import com.java.gestao_vendas.domain.Endereco;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class PedidoRepository {
+@Repository
+public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
 
-    @PersistenceContext
-    private EntityManager em;
+    @Query("FROM Endereco e WHERE e.endereco LIKE %:endereco%")
+    List<Endereco> getEnderecos(@Param("endereco") String endereco);
 
-    public List<Pedido> ListarPedidos() {
-        return em.createQuery("from Pedido").getResultList();
-    }
-
-    public Pedido BuscarPedidoId(int id) {
-        return em.find(Pedido.class, id);
-    }
-
-    public void SalvarPedido(Pedido pedido) {
-        em.persist(pedido);
-    }
-
-    public void AlterarPedido(Pedido pedido) {
-        em.merge(pedido);
-
-    }
-
-    public void ExcluirPedido(Long id) {
-        em.remove(id);
-    }
-
+    @Query("FROM Endereco e WHERE e.endereco LIKE %:cep%")
+    List<Endereco> getCep(@Param("cep") String cep);
 }

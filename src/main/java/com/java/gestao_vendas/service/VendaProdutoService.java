@@ -1,15 +1,12 @@
-package br.com.gestor_vendas.venda_produto;
+package com.java.gestao_vendas.service;
 
-import br.com.gestor_vendas.produto.Produto;
-import br.com.gestor_vendas.venda.Venda;
-
-import java.util.List;
+import com.java.gestao_vendas.domain.VendaProduto;
 
 public class VendaProdutoService {
     public static void valorPorProduto(VendaProduto vp) {
         double valorUnitario = 0;
         valorUnitario = vp.getProduto().getPreco() * vp.getQuantidade();
-         vp.setValorTotalProduto(valorUnitario);
+        vp.setValorTotalProduto(valorUnitario);
     }
 }
 

@@ -1,35 +1,16 @@
 package com.java.gestao_vendas.repository;
 
-import com.java.gestao_vendas.domain.Produto;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import com.java.gestao_vendas.domain.Venda;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
-public class ProdutoRepository {
+@Repository
+public interface VendaRepository extends JpaRepository<Venda, Long> {
 
-    @PersistenceContext
-    private EntityManager em;
+    Optional<Venda> findById(Long id);
 
-    public List<Produto> ListarProdutos() {
-        return em.createQuery("from Produto").getResultList();
-    }
-
-    public Produto BuscarProdutoId(int id) {
-        return em.find(Produto.class, id);
-    }
-
-    public void SalvarProduto(Produto produto) {
-        em.persist(produto);
-    }
-
-    public void AlterarProduto(Produto produto) {
-        em.merge(produto);
-
-    }
-
-    public void ExcluirProduto(Long id) {
-        em.remove(id);
-    }
-
+    List<Venda> findByClienteId(Long id);
 }

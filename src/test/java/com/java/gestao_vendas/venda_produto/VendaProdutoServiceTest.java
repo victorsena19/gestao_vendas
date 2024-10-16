@@ -1,8 +1,8 @@
 package venda_produto;
 
-import br.com.gestor_vendas.produto.Produto;
-import br.com.gestor_vendas.venda_produto.VendaProduto;
-import br.com.gestor_vendas.venda_produto.VendaProdutoService;
+import com.java.gestao_vendas.domain.Produto;
+import com.java.gestao_vendas.domain.VendaProduto;
+import com.java.gestao_vendas.service.VendaProdutoService;
 
 import org.junit.Test;
 
