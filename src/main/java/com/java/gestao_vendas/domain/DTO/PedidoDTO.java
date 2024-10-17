@@ -1,6 +1,5 @@
 package com.java.gestao_vendas.domain.DTO;
 
-import com.java.gestao_vendas.enuns.Status;
 import lombok.Data;
 import java.time.LocalDateTime;
 
@@ -11,7 +10,8 @@ public class PedidoDTO{
     private int quantidade;
     private PessoaDTO pessoa;
     private VendedorDTO vendedor;
-    private Status statusPagamento;
+    private StatusPagamentoDTO statusPagamento;
+    private TipoPagamentoDTO tipoPagamento;
     private LocalDateTime dataPedido;
     private EmpresaDTO empresa;
 
