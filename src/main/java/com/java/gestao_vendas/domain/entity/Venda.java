@@ -1,11 +1,7 @@
 package com.java.gestao_vendas.domain.entity;
 
-import com.java.gestao_vendas.enuns.Status;
-import com.java.gestao_vendas.enuns.TipoPagamento;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.relational.core.mapping.Table;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,7 +24,9 @@ public class Venda implements Serializable {
     @Column(name = "chave_acesso")
     private String chaveAcesso;
 
-    private Status status;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "status_pagamento_id")
+    private StatusPagamento status;
 
     @Column(name = "data_venda")
     private LocalDateTime dataVenda;
@@ -38,7 +36,8 @@ public class Venda implements Serializable {
     @Column(name = "total_venda")
     private double totalVenda;
 
-    @Column(name = "tipo_pagamento")
+    @JoinColumn(name = "tipo_pagamento_id")
+    @OneToOne(cascade = CascadeType.ALL)
     private TipoPagamento tipoPagamento;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -48,7 +47,7 @@ public class Venda implements Serializable {
     private Vendedor vendedor;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "venda_produto_id")
+    @Column(name = "venda_produto_id")
     private List<VendaProduto> vendaProduto;
 
     @OneToOne(cascade = CascadeType.ALL)

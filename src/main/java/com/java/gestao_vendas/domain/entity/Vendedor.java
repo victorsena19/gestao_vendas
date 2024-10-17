@@ -21,10 +21,10 @@ public class Vendedor implements Serializable {
 
     private double comissao;
 
-    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL)
     private Pessoa pessoa;
 
-    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL)
     private Empresa empresa;
 
     public Vendedor() {

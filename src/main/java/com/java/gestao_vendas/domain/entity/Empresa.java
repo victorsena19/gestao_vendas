@@ -22,7 +22,7 @@ public class Empresa implements Serializable {
     String telefone;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    com.java.gestao_vendas.entity.Endereco endereco;
+    private Endereco endereco;
 
     public Empresa() {}
 

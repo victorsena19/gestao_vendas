@@ -1,7 +1,7 @@
 package com.java.gestao_vendas.domain.DTO;
 
 import com.java.gestao_vendas.enuns.Status;
-import com.java.gestao_vendas.enuns.TipoPagamento;
+import com.java.gestao_vendas.domain.entity.TipoPagamento;
 import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.List;

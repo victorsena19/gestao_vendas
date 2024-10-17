@@ -17,7 +17,6 @@ public interface VendedorRepository extends JpaRepository<Vendedor, Long> {
     @Query("FROM Vendedor v WHERE LOWER(v.pessoa.nomePessoa) LIKE %:nome%")
     List<Vendedor> getNome(@Param("nome") String nome);
 
-    @Query("FROM Vendedor v WHERE v.pessoa.cnpjCpf LIKE %:cpf%")
+    @Query("FROM Vendedor v WHERE v.pessoa.cnpjCpf = :cpf")
     Optional<Vendedor> findByEmail(@Param("cpf") String cpf);
-    
 }

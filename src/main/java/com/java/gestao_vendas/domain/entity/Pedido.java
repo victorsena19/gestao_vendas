@@ -1,6 +1,4 @@
 package com.java.gestao_vendas.domain.entity;
-
-import com.java.gestao_vendas.enuns.Status;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,10 +22,15 @@ public class Pedido implements Serializable {
     private Pessoa pessoa;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private com.java.gestao_vendas.entity.Vendedor vendedor;
+    private Vendedor vendedor;
 
-    @Column(name = "status_pagamento")
-    private Status statusPagamento;
+    @JoinColumn(name = "status_pagamento_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    private StatusPagamento statusPagamento;
+
+    @JoinColumn(name = "tipo_pagamento_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    private TipoPagamento tipoPagamento;
 
     @Column(name = "data_pedido")
     private LocalDateTime dataPedido;

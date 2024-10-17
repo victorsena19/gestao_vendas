@@ -32,10 +32,10 @@ public class CupomFiscal implements Serializable {
     private String observacao;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private com.java.gestao_vendas.entity.Venda venda;
+    private Venda venda;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private com.java.gestao_vendas.entity.Empresa empresa;
+    private Empresa empresa;
 
     public CupomFiscal() {
     }
