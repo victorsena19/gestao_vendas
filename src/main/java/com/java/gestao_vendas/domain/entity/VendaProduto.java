@@ -1,4 +1,4 @@
-package com.java.gestao_vendas.domain;
+package com.java.gestao_vendas.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package venda_produto;
 
-import com.java.gestao_vendas.domain.Produto;
-import com.java.gestao_vendas.domain.VendaProduto;
+import com.java.gestao_vendas.entity.Produto;
+import com.java.gestao_vendas.entity.VendaProduto;
 import com.java.gestao_vendas.service.VendaProdutoService;
 
 import org.junit.Test;

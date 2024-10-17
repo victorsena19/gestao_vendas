@@ -1,8 +1,8 @@
 package com.java.gestao_vendas.venda;
 
-import com.java.gestao_vendas.domain.Produto;
-import com.java.gestao_vendas.domain.Venda;
-import com.java.gestao_vendas.domain.VendaProduto;
+import com.java.gestao_vendas.entity.Produto;
+import com.java.gestao_vendas.entity.Venda;
+import com.java.gestao_vendas.entity.VendaProduto;
 import org.junit.Test;
 
 import java.util.ArrayList;

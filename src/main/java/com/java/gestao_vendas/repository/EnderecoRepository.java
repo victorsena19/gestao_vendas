@@ -1,6 +1,6 @@
 package com.java.gestao_vendas.repository;
 
-import com.java.gestao_vendas.domain.Endereco;
+import com.java.gestao_vendas.domain.entity.Endereco;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

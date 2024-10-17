@@ -1,4 +1,4 @@
-package com.java.gestao_vendas.domain;
+package com.java.gestao_vendas.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -22,7 +22,7 @@ public class Empresa implements Serializable {
     String telefone;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    Endereco endereco;
+    com.java.gestao_vendas.entity.Endereco endereco;
 
     public Empresa() {}
 

@@ -1,4 +1,4 @@
-package com.java.gestao_vendas.domain;
+package com.java.gestao_vendas.domain.entity;
 
 import com.java.gestao_vendas.enuns.Status;
 import com.java.gestao_vendas.enuns.TipoPagamento;

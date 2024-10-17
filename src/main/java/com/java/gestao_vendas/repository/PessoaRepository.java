@@ -1,6 +1,6 @@
 package com.java.gestao_vendas.repository;
 
-import com.java.gestao_vendas.domain.Pessoa;
+import com.java.gestao_vendas.domain.entity.Pessoa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

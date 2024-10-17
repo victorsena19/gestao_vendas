@@ -1,4 +1,4 @@
-package com.java.gestao_vendas.domain;
+package com.java.gestao_vendas.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,26 +8,23 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "notas_fiscais")
-public class NotaFiscal implements Serializable {
+@Table(name = "cupons_fiscais")
+public class CupomFiscal implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_nota_fiscal")
-    private Long idNotaFiscal;
+    @Column(name = "id_cupom_fiscal")
+    private Long id;
 
-    @Column(name = "numero_nota")
-    private String numeroNota;
+    @Column(name = "numero_cupom")
+    private String numeroCupom;
 
     @Column(name = "chave_acesso")
     private String chaveAcesso;
 
-    private String serie;
-
     @Column(name = "data_emissao")
     private LocalDateTime dataEmissao;
 
-    @Column(name = "natureza_operacao")
-    private String naturezaOperacao;
+    private String serie;
 
     @Column(name = "protocolo_autorizacao")
     private String protocolo;
@@ -35,10 +32,11 @@ public class NotaFiscal implements Serializable {
     private String observacao;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Venda venda;
+    private com.java.gestao_vendas.entity.Venda venda;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Empresa empresa;
+    private com.java.gestao_vendas.entity.Empresa empresa;
 
-    public NotaFiscal() {}
+    public CupomFiscal() {
+    }
 }

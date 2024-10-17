@@ -1,11 +1,10 @@
 package com.java.gestao_vendas.service;
 
-import com.java.gestao_vendas.domain.Venda;
-import com.java.gestao_vendas.domain.VendaProduto;
+import com.java.gestao_vendas.domain.DTO.VendaDTO;
 
 public class VendaService {
 
-    public void valorTotalVenda(Venda venda) {
+    public void valorTotalVenda(VendaDTO venda) {
      double total = 0;
 /*
      for(VendaProduto vp : venda.getVendaProduto()){

@@ -1,4 +1,4 @@
-package com.java.gestao_vendas.domain;
+package com.java.gestao_vendas.domain.entity;
 
 import com.java.gestao_vendas.enuns.Status;
 import jakarta.persistence.*;
@@ -24,7 +24,7 @@ public class Pedido implements Serializable {
     private Pessoa pessoa;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Vendedor vendedor;
+    private com.java.gestao_vendas.entity.Vendedor vendedor;
 
     @Column(name = "status_pagamento")
     private Status statusPagamento;

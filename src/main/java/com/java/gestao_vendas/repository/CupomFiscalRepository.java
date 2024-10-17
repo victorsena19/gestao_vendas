@@ -1,6 +1,6 @@
 package com.java.gestao_vendas.repository;
 
-import com.java.gestao_vendas.domain.CupomFiscal;
+import com.java.gestao_vendas.domain.entity.CupomFiscal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

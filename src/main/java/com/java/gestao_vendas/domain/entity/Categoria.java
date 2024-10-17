@@ -1,4 +1,4 @@
-package com.java.gestao_vendas.domain;
+package com.java.gestao_vendas.domain.entity;
 
 
 import jakarta.persistence.*;
@@ -19,7 +19,7 @@ public class Categoria implements Serializable {
     private String descricao;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Empresa empresa;
+    private com.java.gestao_vendas.entity.Empresa empresa;
 
     public Categoria() {}
 }
