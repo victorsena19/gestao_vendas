@@ -1,9 +1,14 @@
 package com.java.gestao_vendas.domain.DTO;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class VendaDTO{
     private Long id;
@@ -20,7 +25,5 @@ public class VendaDTO{
     private List<VendaProdutoDTO> vendaProduto;
     private EmpresaDTO empresa;
 
-    public VendaDTO() {
-    }
 }
 

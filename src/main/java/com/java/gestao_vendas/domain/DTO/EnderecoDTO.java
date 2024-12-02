@@ -1,7 +1,11 @@
 package com.java.gestao_vendas.domain.DTO;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class EnderecoDTO{
     private Long id;
@@ -11,8 +15,6 @@ public class EnderecoDTO{
     private String cidade;
     private String estado;
     private String cep;
-
-    public EnderecoDTO() {}
 
 }
 

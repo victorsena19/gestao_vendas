@@ -1,6 +1,11 @@
 package com.java.gestao_vendas.domain.DTO;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import jakarta.validation.constraints.*;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class ProdutoDTO {
     private Long idProduto;
@@ -28,5 +33,4 @@ public class ProdutoDTO {
     @NotNull
     private EmpresaDTO empresa;
 
-    public ProdutoDTO() {}
 }

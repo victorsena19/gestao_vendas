@@ -1,7 +1,12 @@
 package com.java.gestao_vendas.domain.DTO;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class NotaFiscalDTO{
     private Long idNotaFiscal;
@@ -15,5 +20,4 @@ public class NotaFiscalDTO{
     private VendaDTO venda;
     private EmpresaDTO empresa;
 
-    public NotaFiscalDTO() {}
 }
