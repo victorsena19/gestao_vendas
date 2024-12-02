@@ -5,7 +5,7 @@ import com.java.gestao_vendas.domain.entity.NotaFiscal;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface NotaFiscalMapper {
     NotaFiscalMapper INSTANCE = Mappers.getMapper(NotaFiscalMapper.class);
 

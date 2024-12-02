@@ -5,7 +5,7 @@ import com.java.gestao_vendas.domain.entity.Endereco;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface EnderecoMapper {
     EnderecoMapper INSTANCE = Mappers.getMapper(EnderecoMapper.class);
 

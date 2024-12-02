@@ -5,7 +5,7 @@ import com.java.gestao_vendas.domain.entity.Crianca;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface CriancaMapper {
     CriancaMapper INSTANCE = Mappers.getMapper(CriancaMapper.class);
 

@@ -5,7 +5,7 @@ import com.java.gestao_vendas.domain.entity.Empresa;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface EmpresaMapper {
     EmpresaMapper INSTANCE = Mappers.getMapper(EmpresaMapper.class);
 
