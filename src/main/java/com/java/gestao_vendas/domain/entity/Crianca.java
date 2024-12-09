@@ -37,6 +37,7 @@ public class Crianca implements Serializable {
     private String telefonePai;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
 
     public Crianca() {}

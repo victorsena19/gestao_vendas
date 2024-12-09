@@ -1,11 +1,15 @@
 package com.java.gestao_vendas.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "vendedores")
@@ -27,7 +31,5 @@ public class Vendedor implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Empresa empresa;
 
-    public Vendedor() {
-    }
 }
 

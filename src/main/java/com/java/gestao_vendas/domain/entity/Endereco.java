@@ -1,9 +1,13 @@
 package com.java.gestao_vendas.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "enderecos")
@@ -16,15 +20,12 @@ public class Endereco implements Serializable {
 
     private String bairro;
 
-    private String endereco;
+    private int numero;
 
     private String cidade;
 
     private String estado;
 
     private String cep;
-
-    public Endereco() {}
-
 }
 

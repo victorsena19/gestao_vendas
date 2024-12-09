@@ -1,10 +1,13 @@
 package com.java.gestao_vendas.domain.entity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "pedidos")
@@ -19,9 +22,11 @@ public class Pedido implements Serializable {
     private int quantidade;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "vendedor_id")
     private Vendedor vendedor;
 
     @JoinColumn(name = "status_pagamento_id")
@@ -36,7 +41,7 @@ public class Pedido implements Serializable {
     private LocalDateTime dataPedido;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
-    public Pedido() {}
 }

@@ -29,6 +29,7 @@ public class Pessoa  implements Serializable {
     private LocalDateTime dataNascimento;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
     private boolean fornecedor;
@@ -37,6 +38,7 @@ public class Pessoa  implements Serializable {
     private int tipoPessoa;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
     public Pessoa() {}

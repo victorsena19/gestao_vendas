@@ -1,10 +1,14 @@
 package com.java.gestao_vendas.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name = "empresas")
@@ -22,8 +26,7 @@ public class Empresa implements Serializable {
     String telefone;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "categoria_id")
     private Endereco endereco;
-
-    public Empresa() {}
 
 }

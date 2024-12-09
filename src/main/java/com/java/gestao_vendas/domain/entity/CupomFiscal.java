@@ -1,11 +1,15 @@
 package com.java.gestao_vendas.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "cupons_fiscais")
@@ -32,11 +36,10 @@ public class CupomFiscal implements Serializable {
     private String observacao;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "venda_id")
     private Venda venda;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "empresa_id")
     private Empresa empresa;
-
-    public CupomFiscal() {
-    }
 }

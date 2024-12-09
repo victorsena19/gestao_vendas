@@ -1,11 +1,15 @@
 package com.java.gestao_vendas.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "vendas")
@@ -36,24 +40,24 @@ public class Venda implements Serializable {
     @Column(name = "total_venda")
     private double totalVenda;
 
-    @JoinColumn(name = "tipo_pagamento_id")
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "tipo_pagamento_id")
     private TipoPagamento tipoPagamento;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vendedor_id")
     private Vendedor vendedor;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @Column(name = "venda_produto_id")
+    @JoinColumn(name = "venda_produto_id")
     private List<VendaProduto> vendaProduto;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "empresa_id")
     private Empresa empresa;
-
-    public Venda() {
-    }
 }
 
