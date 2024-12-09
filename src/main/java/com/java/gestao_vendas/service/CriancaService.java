@@ -1,9 +1,9 @@
 package com.java.gestao_vendas.service;
 
-import com.java.gestao_vendas.domain.DTO.CategoriaDTO;
-import com.java.gestao_vendas.domain.entity.Categoria;
-import com.java.gestao_vendas.mapper.CategoriaMapper;
-import com.java.gestao_vendas.repository.CategoriaRepository;
+import com.java.gestao_vendas.domain.DTO.CriancaDTO;
+import com.java.gestao_vendas.domain.entity.Crianca;
+import com.java.gestao_vendas.mapper.CriancaMapper;
+import com.java.gestao_vendas.repository.CriancaRepository;
 import com.java.gestao_vendas.utils.Messege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,55 +12,47 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoriaService {
+public class CriancaService {
 
-    private final CategoriaMapper categoriaMapper;
-    private final CategoriaRepository categoriaRepository;
+    private final CriancaMapper criancaMapper;
+    private final CriancaRepository criancaRepository;
 
     @Autowired
-    public CategoriaService(CategoriaMapper categoriaMapper, CategoriaRepository categoriaRepository){
-        this.categoriaMapper = categoriaMapper;
-        this.categoriaRepository = categoriaRepository;
+    public CriancaService(CriancaMapper criancaMapper, CriancaRepository criancaRepository){
+        this.criancaMapper = criancaMapper;
+        this.criancaRepository = criancaRepository;
     }
 
-    public CategoriaDTO salvarCategoria(CategoriaDTO categoriaDTO){
-        Categoria novoCategoria = categoriaMapper.toEntity(categoriaDTO);
-        Categoria categoria = categoriaRepository.save(novoCategoria);
-        return categoriaMapper.toDTO(categoria);
+    public CriancaDTO salvarCrianca(CriancaDTO criancaDTO){
+        Crianca novoCrianca = criancaMapper.toEntity(criancaDTO);
+        Crianca crianca = criancaRepository.save(novoCrianca);
+        return criancaMapper.toDTO(crianca);
     }
 
-    public List<Categoria> listarCategorias(){
-        return categoriaRepository.findAll();
+    public List<Crianca> listarCriancas(){
+        return criancaRepository.findAll();
     }
 
-    public Messege deletarCategoria(Long id) {
-        Optional<Categoria> categoria = categoriaRepository.findById(id);
-        if (categoria.isPresent()) {
-            categoriaRepository.delete(categoria.get());
-            return new Messege("OK!", "Categoria excluido com sucesso!");
+    public Messege deletarCrianca(Long id) {
+        Optional<Crianca> crianca = criancaRepository.findById(id);
+        if (crianca.isPresent()) {
+            criancaRepository.delete(crianca.get());
+            return new Messege("OK!", "Crianca excluido com sucesso!");
         }else{
-            return new Messege("Erro!", "Categoria com o " + id + " não foi encontrado!");
+            return new Messege("Erro!", "Crianca com o " + id + " não foi encontrado!");
         }
     }
 
-    public CategoriaDTO criarCategoria(CategoriaDTO categoriaDTO){
-        Optional<Categoria> nomeCategoria = categoriaRepository.getNomeCategoria(categoriaDTO.getNome());
-        if (nomeCategoria.isPresent()){
-            throw new IllegalArgumentException("Categoria com o nome" + categoriaDTO.getNome() + "já existe");
-        }
-        return salvarCategoria(categoriaDTO);
+    public CriancaDTO criarCrianca(CriancaDTO criancaDTO){
+        return salvarCrianca(criancaDTO);
     }
 
-    public CategoriaDTO atualizaCategoria(Long id, CategoriaDTO categoriaDTO){
-        Optional<Categoria> categoriaId = categoriaRepository.findById(id);
-        if(categoriaId.isPresent()){
-            Optional<Categoria> nomeCategoria = categoriaRepository.getNomeCategoria(categoriaDTO.getNome());
-            if (nomeCategoria.isPresent()){
-                throw new IllegalArgumentException("Categoria com o nome" + categoriaDTO.getNome() + "já existe");
-            }
-            salvarCategoria(categoriaDTO);
+    public CriancaDTO atualizaCrianca(Long id, CriancaDTO criancaDTO){
+        Optional<Crianca> criancaId = criancaRepository.findById(id);
+        if(criancaId.isPresent()){
+            salvarCrianca(criancaDTO);
         }
-        throw new IllegalArgumentException("Categoria com o id" + categoriaDTO.getId() + "não existe");
+        throw new IllegalArgumentException("Crianca com o id" + criancaDTO.getId() + "não existe");
     }
 }
 

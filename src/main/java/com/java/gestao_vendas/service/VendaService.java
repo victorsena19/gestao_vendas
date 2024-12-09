@@ -1,13 +1,18 @@
 package com.java.gestao_vendas.service;
 
 import com.java.gestao_vendas.domain.DTO.VendaDTO;
+import com.java.gestao_vendas.domain.DTO.VendaDTO;
+import com.java.gestao_vendas.domain.entity.Venda;
 import com.java.gestao_vendas.domain.entity.Venda;
 import com.java.gestao_vendas.mapper.VendaMapper;
 import com.java.gestao_vendas.repository.VendaRepository;
 import com.java.gestao_vendas.utils.Messege;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
+@Service
 public class VendaService {
     private final VendaMapper vendaMapper;
 
@@ -15,6 +20,10 @@ public class VendaService {
     public VendaService(VendaMapper vendaMapper, VendaRepository vendaRepository) {
         this.vendaMapper = vendaMapper;
         this.vendaRepository = vendaRepository;
+    }
+
+    public List<Venda> listarVendas(){
+        return vendaRepository.findAll();
     }
 
     public VendaDTO salvarVenda(VendaDTO vendaDTO){
@@ -33,9 +42,18 @@ public class VendaService {
         }
     }
 
+    public VendaDTO criarVenda(VendaDTO vendaDTO){
+        return salvarVenda(vendaDTO);
+    }
+
+    public VendaDTO atualizaVenda(Long id, VendaDTO vendaDTO){
+        Optional<Venda> vendaId = vendaRepository.findById(id);
+            salvarVenda(vendaDTO);
+        throw new IllegalArgumentException("Venda com o id" + vendaDTO.getId() + "não existe");
+
+/*
     public void valorTotalVenda(VendaDTO venda) {
         double total = 0;
-/*
      for(VendaProduto vp : venda.getVendaProduto()){
          total += vp.getProduto().getPreco() * vp.getQuantidade();
      }

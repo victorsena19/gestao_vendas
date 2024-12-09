@@ -8,6 +8,7 @@ import com.java.gestao_vendas.utils.Messege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,7 +23,11 @@ public class CupomFiscalService {
         this.cupomFiscalRepository = cupomFiscalRepository;
     }
 
-    public CupomFiscalDTO salvarcupomFiscal(CupomFiscalDTO cupomFiscalDTO){
+    public List<CupomFiscal> listarCuponsFiscais(){
+        return cupomFiscalRepository.findAll();
+    }
+
+    public CupomFiscalDTO salvarCupomFiscal(CupomFiscalDTO cupomFiscalDTO){
         CupomFiscal novocupomFiscal = cupomFiscalMapper.toEntity(cupomFiscalDTO);
         CupomFiscal cupomFiscal = cupomFiscalRepository.save(novocupomFiscal);
         return cupomFiscalMapper.toDTO(cupomFiscal);

@@ -10,6 +10,7 @@ import com.java.gestao_vendas.utils.Messege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +23,10 @@ public class VendaProdutoService {
     public VendaProdutoService(VendaProdutoMapper vendaProdutoMapper, VendaProdutoRepository vendaProdutoRepository){
         this.vendaProdutoMapper = vendaProdutoMapper;
         this.vendaProdutoRepository = vendaProdutoRepository;
+    }
+
+    public List<VendaProduto> listarVendaProdutos(){
+        return vendaProdutoRepository.findAll();
     }
 
     public VendaProdutoDTO salvarVendaProduto(VendaProdutoDTO vendaProdutoDTO){

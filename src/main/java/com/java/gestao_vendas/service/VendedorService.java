@@ -8,6 +8,7 @@ import com.java.gestao_vendas.utils.Messege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +20,10 @@ public class VendedorService {
     public VendedorService(VendedorMapper vendedorMapper, VendedorRepository vendedorRepository) {
         this.vendedorMapper = vendedorMapper;
         this.vendedorRepository = vendedorRepository;
+    }
+
+    public List<Vendedor> listarVendedores(){
+        return vendedorRepository.findAll();
     }
 
     public VendedorDTO salvarVendedor(VendedorDTO vendedorDTO){
@@ -35,6 +40,26 @@ public class VendedorService {
         }else{
             return new Messege("Erro!", "Vendedor com o " + id + " não foi encontrado!");
         }
+    }
+
+    public VendedorDTO criarVendedor(VendedorDTO vendedorDTO){
+        List<Vendedor> nomeVendedor = vendedorRepository.getNome(vendedorDTO.getPessoa().getNomePessoa());
+        if (nomeVendedor != null){
+            throw new IllegalArgumentException("Vendedor com o nome" + vendedorDTO.getPessoa().getNomePessoa() + "já existe");
+        }
+        return salvarVendedor(vendedorDTO);
+    }
+
+    public VendedorDTO atualizaVendedor(Long id, VendedorDTO vendedorDTO) {
+        Optional<Vendedor> vendedorId = vendedorRepository.findById(id);
+        if (vendedorId.isPresent()) {
+            List<Vendedor> nomeVendedor = vendedorRepository.getNome(vendedorDTO.getPessoa().getNomePessoa());
+            if (nomeVendedor != null) {
+                throw new IllegalArgumentException("Vendedor com o nome" + vendedorDTO.getPessoa().getNomePessoa() + "já existe");
+            }
+            salvarVendedor(vendedorDTO);
+        }
+        throw new IllegalArgumentException("Vendedor com o id" + vendedorDTO.getId() + "não existe");
     }
 }
 

@@ -1,6 +1,8 @@
 package com.java.gestao_vendas.service;
 
 import com.java.gestao_vendas.domain.DTO.PessoaDTO;
+import com.java.gestao_vendas.domain.DTO.PessoaDTO;
+import com.java.gestao_vendas.domain.entity.Pessoa;
 import com.java.gestao_vendas.domain.entity.Pessoa;
 import com.java.gestao_vendas.mapper.PessoaMapper;
 import com.java.gestao_vendas.mapper.PessoaMapper;
@@ -10,6 +12,7 @@ import com.java.gestao_vendas.utils.Messege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,6 +24,10 @@ public class PessoaService {
     public PessoaService(PessoaMapper pessoaMapper, PessoaRepository pessoaRepository){
         this.pessoaMapper = pessoaMapper;
         this.pessoaRepository = pessoaRepository;
+    }
+
+    public List<Pessoa> listarPessoas(){
+        return pessoaRepository.findAll();
     }
     
     public PessoaDTO salvarPessoa(PessoaDTO pessoaDTO){
@@ -37,6 +44,36 @@ public class PessoaService {
         }else{
             return new Messege("Erro!", "Pessoa com o " + id + " não foi encontrado!");
         }
+    }
+
+    public PessoaDTO criarPessoa(PessoaDTO pessoaDTO){
+        Optional<Pessoa> emailExistente = pessoaRepository.findByEmailIgnoreCase(pessoaDTO.getEmail());
+        Optional<Pessoa> cpfCnpjExistente = pessoaRepository.findBycnpjCpf(pessoaDTO.getCnpjCpf());
+        if (emailExistente.isPresent()){
+            throw new IllegalArgumentException("Pessoa com o email " + pessoaDTO.getEmail() + " já existe");
+        }
+
+        if (cpfCnpjExistente.isPresent()){
+            throw new IllegalArgumentException("Pessoa com o cnpj ou cpf " + pessoaDTO.getCnpjCpf() + " já existe");
+        }
+        return salvarPessoa(pessoaDTO);
+    }
+
+    public PessoaDTO atualizaPessoa(Long id, PessoaDTO pessoaDTO) {
+        Optional<Pessoa> pessoaId = pessoaRepository.findById(id);
+        if (pessoaId.isPresent()) {
+            Optional<Pessoa> emailPessoa = pessoaRepository.findByEmailIgnoreCase(pessoaDTO.getEmail());
+            Optional<Pessoa> cpfCnpj = pessoaRepository.findBycnpjCpf(pessoaDTO.getCnpjCpf());
+            if (emailPessoa.isPresent()){
+                throw new IllegalArgumentException("Pessoa com o email" + pessoaDTO.getEmail() + "já existe existe");
+
+            }
+            if (cpfCnpj.isPresent()){
+                throw new IllegalArgumentException("Pessoa com o cnpj ou cpf" + pessoaDTO.getCnpjCpf() + "já existe existe");
+            }
+            salvarPessoa(pessoaDTO);
+        }
+        throw new IllegalArgumentException("Pessoa com o id" + pessoaDTO.getIdPessoa() + "não existe");
     }
 }
 

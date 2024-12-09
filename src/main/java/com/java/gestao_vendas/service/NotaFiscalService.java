@@ -8,6 +8,7 @@ import com.java.gestao_vendas.utils.Messege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +20,10 @@ public class NotaFiscalService {
     public NotaFiscalService(NotaFiscalMapper notaFiscalMapper, NotaFiscalRepository notaFiscalRepository) {
         this.notaFiscalMapper = notaFiscalMapper;
         this.notaFiscalRepository = notaFiscalRepository;
+    }
+
+    public List<NotaFiscal> listarNotasFiscais(){
+        return notaFiscalRepository.findAll();
     }
 
     public NotaFiscalDTO salvarNotaFiscal(NotaFiscalDTO notaFiscalDTO){
