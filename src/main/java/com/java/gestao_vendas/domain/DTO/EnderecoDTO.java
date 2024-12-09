@@ -11,7 +11,7 @@ public class EnderecoDTO{
     private Long id;
     private String logradouro;
     private String bairro;
-    private String endereco;
+    private int numero;
     private String cidade;
     private String estado;
     private String cep;
