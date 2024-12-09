@@ -2,9 +2,6 @@
 
 //import com.java.gestao_vendas.entity.Produto;
 //import com.java.gestao_vendas.entity.VendaProduto;
-import com.java.gestao_vendas.service.VendaProdutoService;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

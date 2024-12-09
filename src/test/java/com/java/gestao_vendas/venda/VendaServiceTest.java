@@ -2,7 +2,7 @@ package com.java.gestao_vendas.venda;
 
 import com.java.gestao_vendas.entity.Produto;
 import com.java.gestao_vendas.entity.Venda;
-import com.java.gestao_vendas.service.VendaService;
+import com.java.gestao_vendas.venda.service.VendaService;
 import com.java.gestao_vendas.entity.VendaProduto;
 
 import org.junit.Test;
