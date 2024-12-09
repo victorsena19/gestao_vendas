@@ -13,14 +13,10 @@ import java.util.Optional;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
-    Optional<Produto> findByIdProduto(Long id);
-
-    @Query("FROM Produto p WHERE p.nomeProduto LIKE %:nome%")
-    List<Produto> getNomeProduto(@Param("nome") String nome);
+    List<Produto> findByNomeProdutoContainingIgnoreCase(String nome);
 
     @Query("FROM Produto p WHERE LOWER(p.pessoa.nomePessoa) LIKE %:fornecedor%")
     List<Produto> getFornecedor(@Param("fornecedor") Pessoa fornecedor);
 
-    @Query("FROM Produto p WHERE LOWER(p.categoria.nome) LIKE %:nome%")
-    List<Produto> getNomeCategoria(@Param("nome") String nome);
+    List<Produto> getNomeCategoria(String nome);
 }

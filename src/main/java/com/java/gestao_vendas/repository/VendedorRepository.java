@@ -12,8 +12,6 @@ import java.util.Optional;
 @Repository
 public interface VendedorRepository extends JpaRepository<Vendedor, Long> {
 
-    Optional<Vendedor> findById(Long id);
-
     @Query("FROM Vendedor v WHERE LOWER(v.pessoa.nomePessoa) LIKE %:nome%")
     List<Vendedor> getNome(@Param("nome") String nome);
 

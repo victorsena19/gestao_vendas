@@ -14,15 +14,11 @@ import java.util.Optional;
 @Repository
 public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
-    Optional<Pessoa> findById(Long id);
-
-    @Query("FROM Pessoa p WHERE LOWER(p.nomePessoa) LIKE %:nome%")
-    List<Pessoa> getNome(@Param("nome") String nome);
+    List<Pessoa> getNomeContainingIgnoreCase(String nome);
 
     Optional<Pessoa> findBycnpjCpf(String cnpjCpf);
 
-    @Query("FROM Pessoa p WHERE p.email LIKE %:email%")
-    List<Pessoa> getEmail(@Param("email") String email);
+    Optional<Pessoa> findByEmailIgnoreCase(String email);
 
     List<Pessoa> findByDataNascimento(LocalDateTime dataNascimento);
 }

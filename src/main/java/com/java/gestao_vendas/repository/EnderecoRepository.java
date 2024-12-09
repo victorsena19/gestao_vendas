@@ -11,9 +11,10 @@ import java.util.List;
 @Repository
 public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
 
-    @Query("FROM Endereco e WHERE e.endereco LIKE %:endereco%")
-    List<Endereco> getEnderecos(@Param("endereco") String endereco);
+    List<Endereco> findByLogradouroContainingIgnoreCase(String logradouro);
 
-    @Query("FROM Endereco e WHERE e.endereco LIKE %:cep%")
-    List<Endereco> getCep(@Param("cep") String cep);
+    List<Endereco> findByCep(String cep);
+
+    List<Endereco> findByNumero(int numero);
+
 }

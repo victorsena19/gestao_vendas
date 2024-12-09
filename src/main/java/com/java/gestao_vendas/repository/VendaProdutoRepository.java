@@ -12,8 +12,6 @@ import java.util.Optional;
 @Repository
 public interface VendaProdutoRepository extends JpaRepository<VendaProduto, Long> {
 
-    Optional<VendaProduto> findById(Long id);
-
     @Query("FROM VendaProduto vp WHERE vp.venda.id = :id")
     Optional<VendaProduto> getIdVenda(@Param("id") Long id);
 

@@ -12,12 +12,8 @@ import java.util.Optional;
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
-    Optional<Pedido> findByidPedido(Long id);
+    List<Pedido> findByPessoa_NomePessoaContainingIgnoreCase(String nome);
 
-    @Query("FROM Pedido p WHERE LOWER(p.pessoa.nomePessoa) LIKE %:nome%")
-    List<Pedido> getPedidoCliente(@Param("nome") String nome);
-
-    @Query("FROM Pedido p WHERE LOWER(p.vendedor.pessoa.nomePessoa) LIKE %:nome%")
-    List<Pedido> getPedidoVendedor(String nome);
+    List<Pedido> findByVendedor_Pessoa_NomePessoaContainingIgnoreCase(String nome);
 
 }
