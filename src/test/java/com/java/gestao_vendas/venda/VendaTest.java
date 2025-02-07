@@ -1,42 +1,82 @@
 package com.java.gestao_vendas.venda;
 
-import com.java.gestao_vendas.entity.Produto;
-import com.java.gestao_vendas.entity.Venda;
-import com.java.gestao_vendas.entity.VendaProduto;
+import com.java.gestao_vendas.item.dto.ItemDTO;
+import com.java.gestao_vendas.produto.dto.ProdutoDTO;
+import com.java.gestao_vendas.venda.dto.VendaDTO;
+import com.java.gestao_vendas.venda.entity.Venda;
+import com.java.gestao_vendas.venda.mapper.VendaMapper;
+import com.java.gestao_vendas.venda.repository.VendaRepository;
+import com.java.gestao_vendas.venda.service.VendaService;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class VendaTest {
-    @Test
-    public void testVenda(){
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
-        Venda venda = new Venda();
-        Produto p1 = new Produto();
+@SpringBootTest
+public class VendaTest {
+
+    @Mock
+    private VendaRepository vendaRepository;
+
+    @Mock
+    private VendaMapper vendaMapper;
+
+    @InjectMocks
+    private VendaService vendaService;
+
+    @Before
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    public void criarVenda(){
+        VendaDTO vendaDTO = new VendaDTO();
+
+        ProdutoDTO p1 = new ProdutoDTO();
         p1.setNomeProduto("mustang");
         p1.setPreco(2590);
 
-        Produto p2 = new Produto();
+        ProdutoDTO p2 = new ProdutoDTO();
         p2.setNomeProduto("fusca");
         p2.setPreco(3290);
 
-        VendaProduto vp1 = new VendaProduto();
+        ItemDTO vp1 = new ItemDTO();
+        ItemDTO vp2 = new ItemDTO();
+
         vp1.setProduto(p1);
         vp1.setQuantidade(5);
+        vp1.setVenda(vendaDTO);
 
-        VendaProduto vp2 = new VendaProduto();
         vp2.setProduto(p2);
-        vp2.setQuantidade(10);
+        vp2.setQuantidade(3);
+        vp2.setVenda(vendaDTO);
 
-        List<VendaProduto> vp = new ArrayList<>();
-
+        List<ItemDTO> vp = new ArrayList<>();
         vp.add(vp1);
         vp.add(vp2);
 
+        vendaDTO.setItem(vp);
 
-        venda.setVendaProduto(vp);
+        when(vendaMapper.toEntity(any())).thenReturn(new Venda());
+        when(vendaMapper.toDTO(any())).thenReturn(vendaDTO);
 
-        System.out.println(venda.getVendaProduto());
+        when(vendaRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
+
+        VendaDTO salvar = vendaService.criarVenda(vendaDTO);
+
+        //assertEquals(22820, salvar.getTotalVenda(), 0.01);
+
+
     }
 }
