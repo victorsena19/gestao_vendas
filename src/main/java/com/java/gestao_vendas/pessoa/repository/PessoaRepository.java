@@ -12,9 +12,9 @@ import java.util.Optional;
 @Repository
 public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
-    List<Pessoa> getNomeContainingIgnoreCase(String nome);
+    List<Pessoa> findByNomePessoaContainingIgnoreCase(String nome);
 
-    Optional<Pessoa> findBycnpjCpf(String cnpjCpf);
+    Optional<Pessoa> findByCnpjCpf(String cnpjCpf);
 
     Optional<Pessoa> findByEmailIgnoreCase(String email);
 

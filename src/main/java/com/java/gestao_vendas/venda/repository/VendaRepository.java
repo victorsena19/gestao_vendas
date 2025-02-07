@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface VendaRepository extends JpaRepository<Venda, UUID> {
+public interface VendaRepository extends JpaRepository<Venda, Long> {
 
     @Query("FROM Venda v WHERE LOWER(v.pessoa.nomePessoa) LIKE %:nome%")
     List<Venda> findClienteNome(@Param("nome") String nome);
