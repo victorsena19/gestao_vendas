@@ -1,7 +1,6 @@
-package com.java.gestao_vendas.venda_produto.entity;
+package com.java.gestao_vendas.item.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.java.gestao_vendas.empresa.entity.Empresa;
 import com.java.gestao_vendas.produto.entity.Produto;
 import com.java.gestao_vendas.venda.entity.Venda;
@@ -9,11 +8,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,25 +19,28 @@ import java.util.UUID;
 public class Item extends Persistence {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private Long id;
 
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "produto_id")
     private Produto produto;
 
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "venda_id")
+    @JsonBackReference
     private Venda venda;
 
     private int quantidade;
 
-    private double desconto;
+    private BigDecimal desconto;
 
     @Column(name = "valor_total_produto")
-    private double precoUnitario;
+    private BigDecimal precoUnitario;
 
     @Column(name = "valor_total")
-    private double valorTotal;
+    private BigDecimal valorTotal;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Empresa empresa;

@@ -1,11 +1,9 @@
-package com.java.gestao_vendas.venda_produto.service;
+package com.java.gestao_vendas.item.service;
 
-import com.java.gestao_vendas.venda_produto.dto.VendaProdutoDTO;
-import com.java.gestao_vendas.venda_produto.entity.VendaProduto;
-import com.java.gestao_vendas.venda_produto.mapper.ItemMapper;
-import com.java.gestao_vendas.venda_produto.mapper.VendaProdutoMapper;
-import com.java.gestao_vendas.venda_produto.repository.ItemRepository;
-import com.java.gestao_vendas.venda_produto.repository.VendaProdutoRepository;
+import com.java.gestao_vendas.item.dto.ItemDTO;
+import com.java.gestao_vendas.item.entity.Item;
+import com.java.gestao_vendas.item.mapper.ItemMapper;
+import com.java.gestao_vendas.item.repository.ItemRepository;
 import com.java.gestao_vendas.utils.Messege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,30 +24,30 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-    public List<VendaProduto> listarVendaProdutos(){
-        return vendaProdutoRepository.findAll();
+    public List<Item> listarItems(){
+        return itemRepository.findAll();
     }
 
-    public VendaProdutoDTO salvarVendaProduto(VendaProdutoDTO vendaProdutoDTO){
-        VendaProduto novoVendaProduto = vendaProdutoMapper.toEntity(vendaProdutoDTO);
-        VendaProduto vendaProduto = vendaProdutoRepository.save(novoVendaProduto);
-        return vendaProdutoMapper.toDTO(vendaProduto);
+    public ItemDTO salvarItem(ItemDTO itemDTO){
+        Item novoItem = itemMapper.toEntity(itemDTO);
+        Item item = itemRepository.save(novoItem);
+        return itemMapper.toDTO(item);
     }
 
-    public Messege deletarVendaProduto(UUID id) {
-        Optional<VendaProduto> vendaProduto = vendaProdutoRepository.findById(id);
-        if (vendaProduto.isPresent()) {
-            vendaProdutoRepository.delete(vendaProduto.get());
-            return new Messege("OK!", "VendaProduto excluido com sucesso!");
+    public Messege deletarItem(Long id) {
+        Optional<Item> item = itemRepository.findById(id);
+        if (item.isPresent()) {
+            itemRepository.delete(item.get());
+            return new Messege("OK!", "Item excluido com sucesso!");
         }else{
-            return new Messege("Erro!", "VendaProduto com o " + id + " não foi encontrado!");
+            return new Messege("Erro!", "Item com o " + id + " não foi encontrado!");
         }
     }
 
-    public VendaProdutoDTO criarVendaProduto(VendaProdutoDTO vendaProdutoDTO){
-        VendaProduto vendaProduto = vendaProdutoMapper.toEntity(vendaProdutoDTO);
-        vendaProdutoRepository.save(vendaProduto);
-        return  vendaProdutoMapper.toDTO(vendaProduto);
+    public ItemDTO criarItem(ItemDTO itemDTO){
+        Item item = itemMapper.toEntity(itemDTO);
+        itemRepository.save(item);
+        return  itemMapper.toDTO(item);
     }
 
 

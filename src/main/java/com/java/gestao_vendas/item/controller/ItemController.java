@@ -1,9 +1,8 @@
-package com.java.gestao_vendas.venda_produto.controller;
+package com.java.gestao_vendas.item.controller;
 
-import com.java.gestao_vendas.venda.dto.VendaDTO;
-import com.java.gestao_vendas.venda_produto.dto.VendaProdutoDTO;
-import com.java.gestao_vendas.venda_produto.entity.VendaProduto;
-import com.java.gestao_vendas.venda_produto.service.VendaProdutoService;
+import com.java.gestao_vendas.item.dto.ItemDTO;
+import com.java.gestao_vendas.item.entity.Item;
+import com.java.gestao_vendas.item.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,24 +11,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/vendaproduto")
-public class VendaProdutoController {
+@RequestMapping("/item")
+public class ItemController {
 
-    public VendaProdutoService vendaProdutoService;
+    public ItemService itemService;
 
     @Autowired
-    public VendaProdutoController(VendaProdutoService vendaProdutoService){
-        this.vendaProdutoService = vendaProdutoService;
+    public ItemController(ItemService itemService){
+        this.itemService = itemService;
     }
 
     @GetMapping
-    public ResponseEntity<List<VendaProduto>> listarVendaProdutos(){
-        List<VendaProduto> vendaProdutos = vendaProdutoService.listarVendaProdutos();
-        return ResponseEntity.ok(vendaProdutos);
+    public ResponseEntity<List<Item>> listarItems(){
+        List<Item> items = itemService.listarItems();
+        return ResponseEntity.ok(items);
     }
 
     @PostMapping
-    public ResponseEntity<VendaProdutoDTO> createVendaProduto(@RequestBody VendaProdutoDTO vendaProdutoDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(vendaProdutoService.criarVendaProduto(vendaProdutoDTO));
+    public ResponseEntity<ItemDTO> createItem(@RequestBody ItemDTO itemDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(itemService.criarItem(itemDTO));
     }
 }
