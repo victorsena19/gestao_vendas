@@ -1,28 +1,31 @@
 package com.java.gestao_vendas.venda.entity;
 
-import com.java.gestao_vendas.venda_produto.entity.VendaProduto;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.java.gestao_vendas.item.entity.Item;
+import com.java.gestao_vendas.pagamento.entity.Pagamento;
+import com.java.gestao_vendas.venda.enun.StatusVenda;
 import com.java.gestao_vendas.vendedor.entity.Vendedor;
 import com.java.gestao_vendas.empresa.entity.Empresa;
 import com.java.gestao_vendas.pessoa.entity.Pessoa;
-import com.java.gestao_vendas.status_pagamento.entity.StatusPagamento;
-import com.java.gestao_vendas.tipo_pagamento.entity.TipoPagamento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
 @Table(name = "vendas")
-public class Venda implements Serializable {
+public class Venda extends Persistence {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_venda")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "tipo_documento")
@@ -34,35 +37,37 @@ public class Venda implements Serializable {
     @Column(name = "chave_acesso")
     private String chaveAcesso;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "status_pagamento_id")
-    private StatusPagamento status;
+    @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Item> item;
+
+    @Enumerated(EnumType.STRING)
+    private StatusVenda statusVenda;
 
     @Column(name = "data_venda")
     private LocalDateTime dataVenda;
 
-    private double desconto;
+    private BigDecimal desconto;
 
     @Column(name = "total_venda")
-    private double totalVenda;
+    private BigDecimal totalVenda;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "tipo_pagamento_id")
-    private TipoPagamento tipoPagamento;
+    @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Pagamento> pagamento;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @Column(name = "restante_venda")
+    private BigDecimal restanteVenda;
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "vendedor_id")
     private Vendedor vendedor;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "venda_produto_id")
-    private List<VendaProduto> vendaProduto;
-
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 }

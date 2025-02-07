@@ -1,5 +1,6 @@
 package com.java.gestao_vendas.endereco.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,9 +12,9 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "enderecos")
-public class Endereco implements Serializable {
+public class Endereco extends Persistence {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String logradouro;
