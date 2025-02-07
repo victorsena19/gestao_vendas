@@ -29,12 +29,12 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<PedidoDTO> criarPedido(PedidoDTO pedidoDTO){
+    public ResponseEntity<PedidoDTO> criarPedido(@RequestBody PedidoDTO pedidoDTO){
         PedidoDTO novaPedido = pedidoService.criarPedido(pedidoDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaPedido);
     }
 
-    @PutMapping(value = {"{/id}"})
+    @PutMapping(value = {"/{id}"})
     public ResponseEntity<PedidoDTO> atualizaPedido(@PathVariable Long id, @RequestParam PedidoDTO pedidoDTO){
         PedidoDTO pedidoAtualizada = pedidoService.atualizaPedido(id, pedidoDTO);
         return ResponseEntity.ok().body(pedidoAtualizada);

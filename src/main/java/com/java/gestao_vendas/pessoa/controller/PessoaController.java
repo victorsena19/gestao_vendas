@@ -4,6 +4,7 @@ import com.java.gestao_vendas.pessoa.dto.PessoaDTO;
 import com.java.gestao_vendas.pessoa.entity.Pessoa;
 import com.java.gestao_vendas.pessoa.service.PessoaService;
 import com.java.gestao_vendas.utils.Messege;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +30,13 @@ public class PessoaController {
     }
 
     @PostMapping
-    public ResponseEntity<PessoaDTO> criarPessoa(PessoaDTO pessoaDTO){
+    public ResponseEntity<PessoaDTO> criarPessoa(@Valid @RequestBody PessoaDTO pessoaDTO){
         PessoaDTO novaPessoa = pessoaService.criarPessoa(pessoaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaPessoa);
     }
 
-    @PutMapping(value = {"{/id}"})
-    public ResponseEntity<PessoaDTO> atualizaPessoa(@PathVariable Long id, @RequestParam PessoaDTO pessoaDTO){
+    @PutMapping(value = {"/{id}"})
+    public ResponseEntity<PessoaDTO> atualizaPessoa(@Valid @PathVariable Long id, @RequestParam PessoaDTO pessoaDTO){
         PessoaDTO pessoaAtualizada = pessoaService.atualizaPessoa(id, pessoaDTO);
         return ResponseEntity.ok().body(pessoaAtualizada);
     }

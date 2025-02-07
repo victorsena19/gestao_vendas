@@ -4,6 +4,7 @@ import com.java.gestao_vendas.crianca.dto.CriancaDTO;
 import com.java.gestao_vendas.crianca.entity.Crianca;
 import com.java.gestao_vendas.crianca.service.CriancaService;
 import com.java.gestao_vendas.utils.Messege;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +29,14 @@ public class CriancaController {
     }
 
     @PostMapping
-    public ResponseEntity<CriancaDTO> criarCrianca(CriancaDTO criancaDTO){
+    public ResponseEntity<CriancaDTO> criarCrianca(@Valid @RequestBody CriancaDTO criancaDTO){
+        System.out.println(criancaDTO.getDataNascimento());
         CriancaDTO novaCrianca = criancaService.criarCrianca(criancaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaCrianca);
     }
 
-    @PutMapping(value = {"{/id}"})
-    public ResponseEntity<CriancaDTO> atualizaCrianca(@PathVariable Long id, @RequestParam CriancaDTO criancaDTO){
+    @PutMapping(value = {"/{id}"})
+    public ResponseEntity<CriancaDTO> atualizaCrianca(@Valid @PathVariable Long id, @RequestBody CriancaDTO criancaDTO){
         CriancaDTO criancaAtualizada = criancaService.atualizaCrianca(id, criancaDTO);
         return ResponseEntity.ok().body(criancaAtualizada);
     }

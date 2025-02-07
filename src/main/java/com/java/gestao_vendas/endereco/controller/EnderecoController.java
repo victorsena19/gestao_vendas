@@ -4,6 +4,7 @@ import com.java.gestao_vendas.endereco.dto.EnderecoDTO;
 import com.java.gestao_vendas.endereco.entity.Endereco;
 import com.java.gestao_vendas.endereco.service.EnderecoService;
 import com.java.gestao_vendas.utils.Messege;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +30,13 @@ public class EnderecoController {
     }
 
     @PostMapping
-    public ResponseEntity<EnderecoDTO> criarEndereco(EnderecoDTO enderecoDTO){
+    public ResponseEntity<EnderecoDTO> criarEndereco(@Valid @RequestBody EnderecoDTO enderecoDTO){
         EnderecoDTO novaEndereco = enderecoService.criarEndereco(enderecoDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaEndereco);
     }
 
-    @PutMapping(value = {"{/id}"})
-    public ResponseEntity<EnderecoDTO> atualizaEndereco(@PathVariable Long id, @RequestParam EnderecoDTO enderecoDTO){
+    @PutMapping(value = {"/{id}"})
+    public ResponseEntity<EnderecoDTO> atualizaEndereco(@Valid @PathVariable Long id, @RequestParam EnderecoDTO enderecoDTO){
         EnderecoDTO enderecoAtualizada = enderecoService.atualizaEndereco(id, enderecoDTO);
         return ResponseEntity.ok().body(enderecoAtualizada);
     }
