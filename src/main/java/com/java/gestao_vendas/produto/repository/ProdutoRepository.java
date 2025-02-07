@@ -12,10 +12,14 @@ import java.util.List;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
+    boolean existsByNomeProdutoIgnoreCase(String nome);
+
+    boolean existsByCategoriaId(Long id);
+
     List<Produto> findByNomeProdutoContainingIgnoreCase(String nome);
 
     @Query("FROM Produto p WHERE LOWER(p.pessoa.nomePessoa) LIKE %:fornecedor%")
-    List<Produto> getFornecedor(@Param("fornecedor") Pessoa fornecedor);
+    List<Produto> findByPessoa(@Param("fornecedor") Pessoa fornecedor);
 
-    List<Produto> getNomeCategoria(String nome);
+    List<Produto> findByCategoria_NomeIgnoreCase(String nome);
 }
