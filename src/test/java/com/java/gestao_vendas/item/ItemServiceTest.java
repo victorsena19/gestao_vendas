@@ -24,4 +24,4 @@ import static org.junit.Assert.assertEquals;
 //        System.out.println(vp1.getValorTotalProduto());
 //    }
 
-}
+

@@ -7,15 +7,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class VendaProdutoDTO{
-    private Long id;
-    private ProdutoDTO produto;
+public class ItemDTO{
+    private UUID id;
     private VendaDTO venda;
+    private ProdutoDTO produto;
+    private double desconto;
     private int quantidade;
-    private double valorTotalProduto;
+    private double precoUnitario;
+    private double valorTotal;
     private EmpresaDTO empresa;
 
 }
