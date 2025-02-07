@@ -4,12 +4,10 @@ import com.java.gestao_vendas.categoria.dto.CategoriaDTO;
 import com.java.gestao_vendas.categoria.entity.Categoria;
 import com.java.gestao_vendas.categoria.mapper.CategoriaMapper;
 import com.java.gestao_vendas.categoria.repository.CategoriaRepository;
-import com.java.gestao_vendas.utils.Messege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoriaService {
@@ -23,44 +21,45 @@ public class CategoriaService {
         this.categoriaRepository = categoriaRepository;
     }
 
+
+    public List<Categoria> listarCategorias(){
+        return categoriaRepository.findAll();
+    }
+
+    public void deletarCategoria(Long id) {
+        Categoria categoria = categoriaRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("Não existe uma categoria com esse id: " + id));
+        categoriaRepository.delete(categoria);
+    }
+
     public CategoriaDTO salvarCategoria(CategoriaDTO categoriaDTO){
         Categoria novoCategoria = categoriaMapper.toEntity(categoriaDTO);
         Categoria categoria = categoriaRepository.save(novoCategoria);
         return categoriaMapper.toDTO(categoria);
     }
 
-    public List<Categoria> listarCategorias(){
-        return categoriaRepository.findAll();
-    }
-
-    public Messege deletarCategoria(Long id) {
-        Optional<Categoria> categoria = categoriaRepository.findById(id);
-        if (categoria.isPresent()) {
-            categoriaRepository.delete(categoria.get());
-            return new Messege("OK!", "Categoria excluido com sucesso!");
-        }else{
-            return new Messege("Erro!", "Categoria com o " + id + " não foi encontrado!");
-        }
-    }
-
     public CategoriaDTO criarCategoria(CategoriaDTO categoriaDTO){
-        List<Categoria> nomeCategoria = categoriaRepository.findByNomeContainsIgnoreCase(categoriaDTO.getNome());
-        if (nomeCategoria != null){
-            throw new IllegalArgumentException("Categoria com o nome" + categoriaDTO.getNome() + "já existe");
+        boolean existsCategoria = categoriaRepository.existsByNomeIgnoreCase(categoriaDTO.getNome());
+        if (existsCategoria){
+            throw new IllegalArgumentException("Já existe uma categoria com o nome: " + categoriaDTO.getNome());
         }
         return salvarCategoria(categoriaDTO);
     }
 
-    public CategoriaDTO atualizaCategoria(Long id, CategoriaDTO categoriaDTO){
-        Optional<Categoria> categoriaId = categoriaRepository.findById(id);
-        if(categoriaId.isPresent()){
-            List<Categoria> nomeCategoria = categoriaRepository.findByNomeContainsIgnoreCase(categoriaDTO.getNome());
-            if (nomeCategoria != null){
-                throw new IllegalArgumentException("Categoria com o nome" + categoriaDTO.getNome() + "já existe");
-            }
-            salvarCategoria(categoriaDTO);
+    public CategoriaDTO atualizaCategoria(Long id, CategoriaDTO categoriaDTO) {
+        Categoria categoriaExistente = categoriaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Não existe uma categoria com o id:" + id));
+        boolean existsCategoria = categoriaRepository.existsByNomeIgnoreCase(categoriaDTO.getNome());
+        if (existsCategoria && !categoriaExistente.getNome().equalsIgnoreCase(categoriaDTO.getNome())) {
+            throw new IllegalArgumentException("Já existe uma categoria com o nome: " + categoriaDTO.getNome());
         }
-        throw new IllegalArgumentException("Categoria com o id" + categoriaDTO.getId() + "não existe");
+
+        categoriaExistente.setNome(categoriaDTO.getNome());
+        categoriaExistente.setDescricao(categoriaDTO.getDescricao());
+
+        Categoria categoriaAtualizada = categoriaRepository.save(categoriaExistente);
+
+        return categoriaMapper.toDTO(categoriaAtualizada);
     }
 }
 
