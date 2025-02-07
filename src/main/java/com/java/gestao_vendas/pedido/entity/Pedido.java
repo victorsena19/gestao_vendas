@@ -32,7 +32,7 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "vendedor_id")
     private Vendedor vendedor;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "pagamento_id")
     private Pagamento pagamento;
 
