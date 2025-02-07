@@ -1,21 +1,22 @@
 package com.java.gestao_vendas.pessoa.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.java.gestao_vendas.empresa.entity.Empresa;
 import com.java.gestao_vendas.endereco.entity.Endereco;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
 @Table(name = "pessoas")
-public class Pessoa  implements Serializable {
+public class Pessoa  extends Persistence {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_pessoa")
-    private Long idPessoa;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Column(name = "cnpj_cpf")
     private String cnpjCpf;
@@ -27,10 +28,11 @@ public class Pessoa  implements Serializable {
 
     private String telefone;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @Column(name = "data_nascimento")
-    private LocalDateTime dataNascimento;
+    private LocalDate dataNascimento;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
@@ -39,7 +41,7 @@ public class Pessoa  implements Serializable {
     @Column(name = "tipo_pessoa")
     private int tipoPessoa;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
