@@ -1,39 +1,35 @@
 package com.java.gestao_vendas.produto.dto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.java.gestao_vendas.categoria.dto.CategoriaDTO;
-import com.java.gestao_vendas.empresa.dto.EmpresaDTO;
 import com.java.gestao_vendas.pessoa.dto.PessoaDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import jakarta.validation.constraints.*;
 import lombok.NoArgsConstructor;
+import java.math.BigDecimal;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ProdutoDTO {
-    private Long idProduto;
-
+    private Long id;
     @NotEmpty
-    @Max(100)
+    @NotNull
+    @Size(max = 100)
     private String nomeProduto;
-    @Max(200)
+    @Size(max = 200)
     private String descricao;
-
-    @NotEmpty
-    private double preco;
-
+    @NotNull
+    private BigDecimal preco;
+    @NotNull
     private int quantidadeEstoque;
-    @NotEmpty
-    private double aliquotaIpi;
-    @NotEmpty
-    private double aliquotaIcms;
-    @NotEmpty
+    private BigDecimal aliquotaIpi;
+    private BigDecimal aliquotaIcms;
     private String ncmProduto;
     @NotNull
     private CategoriaDTO categoria;
     @NotNull
     private PessoaDTO pessoa;
-    @NotNull
-    private EmpresaDTO empresa;
 
 }
