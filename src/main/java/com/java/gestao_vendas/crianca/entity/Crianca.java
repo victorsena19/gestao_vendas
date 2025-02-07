@@ -1,29 +1,32 @@
 package com.java.gestao_vendas.crianca.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.java.gestao_vendas.pessoa.entity.Pessoa;
-import com.java.gestao_vendas.pessoa.enuns.Sexo;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name = "criancas")
-public class Crianca implements Serializable {
+public class Crianca extends Persistence {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String nome;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @Column(name = "data_nascimento")
-    private LocalDateTime dataNascimento;
+    private LocalDate dataNascimento;
 
-    @Enumerated(EnumType.STRING)
-    private Sexo sexo;
+    private String sexo;
 
     @Column(name = "nome_mae")
     private String nomeMae;
@@ -37,9 +40,8 @@ public class Crianca implements Serializable {
     @Column(name = "telefone_pai")
     private String telefonePai;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
 
-    public Crianca() {}
 }
