@@ -1,31 +1,37 @@
-package com.java.gestao_vendas.tipo_pagamento.entity;
+package com.java.gestao_vendas.pagamento.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.java.gestao_vendas.tipo_pagamento.entity.TipoPagamento;
 import com.java.gestao_vendas.venda.entity.Venda;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "tipos_pagamentos")
-public class TipoPagamento extends Persistence {
+@Table(name = "pagamentos")
+public class Pagamento extends Persistence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "nome_pagamento")
-    private String nomePagamento;
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "tipo_pagamento_id")
+    private TipoPagamento tipoPagamento;
 
-    @ManyToMany(mappedBy = "tipoPagamento")
+    private int parcelamento;
+
+    @Column(name = "valor_pago")
+    private BigDecimal valorPago;
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "venda_id")
     @JsonBackReference
-    List<Venda> venda = new ArrayList<>();
+    private Venda venda;
 }

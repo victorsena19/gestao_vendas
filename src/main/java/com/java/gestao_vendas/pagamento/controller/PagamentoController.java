@@ -1,8 +1,8 @@
-package com.java.gestao_vendas.tipo_pagamento.controller;
+package com.java.gestao_vendas.pagamento.controller;
 
-import com.java.gestao_vendas.tipo_pagamento.dto.TipoPagamentoDTO;
-import com.java.gestao_vendas.tipo_pagamento.entity.TipoPagamento;
-import com.java.gestao_vendas.tipo_pagamento.service.TipoPagamentoService;
+import com.java.gestao_vendas.pagamento.dto.PagamentoDTO;
+import com.java.gestao_vendas.pagamento.entity.Pagamento;
+import com.java.gestao_vendas.pagamento.service.PagamentoService;
 import com.java.gestao_vendas.utils.Messege;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,37 +13,37 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tipopagamento")
-public class TipoPagamentoController {
+@RequestMapping("/pagamento")
+public class PagamentoController {
 
-    public TipoPagamentoService tipoPagamentoService;
+    public PagamentoService pagamentoService;
 
     @Autowired
-    public TipoPagamentoController(TipoPagamentoService tipoPagamentoService){
-        this.tipoPagamentoService = tipoPagamentoService;
+    public PagamentoController(PagamentoService pagamentoService){
+        this.pagamentoService = pagamentoService;
     }
 
     @GetMapping
-    public ResponseEntity<List<TipoPagamento>> listarTipoPagamentos(){
-        List<TipoPagamento> tipoPagamentos = tipoPagamentoService.listarTipoPagamentos();
-        return ResponseEntity.ok(tipoPagamentos);
+    public ResponseEntity<List<Pagamento>> listarPagamentos(){
+        List<Pagamento> pagamentos = pagamentoService.listarPagamentos();
+        return ResponseEntity.ok(pagamentos);
     }
 
     @PostMapping
-    public ResponseEntity<TipoPagamentoDTO> criarTipoPagamento(@Valid @RequestBody TipoPagamentoDTO tipoPagamentoDTO){
-        TipoPagamentoDTO novaTipoPagamento = tipoPagamentoService.criarTipoPagamento(tipoPagamentoDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novaTipoPagamento);
+    public ResponseEntity<PagamentoDTO> criarPagamento(@Valid @RequestBody PagamentoDTO pagamentoDTO){
+        PagamentoDTO novaPagamento = pagamentoService.criarPagamento(pagamentoDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novaPagamento);
     }
 
     @PutMapping(value = {"/{id}"})
-    public ResponseEntity<TipoPagamentoDTO> atualizaTipoPagamento(@Valid @PathVariable Long id, @RequestParam TipoPagamentoDTO tipoPagamentoDTO){
-        TipoPagamentoDTO tipoPagamentoAtualizada = tipoPagamentoService.atualizaTipoPagamento(id, tipoPagamentoDTO);
-        return ResponseEntity.ok().body(tipoPagamentoAtualizada);
+    public ResponseEntity<PagamentoDTO> atualizaPagamento(@Valid @PathVariable Long id, @RequestParam PagamentoDTO pagamentoDTO){
+        PagamentoDTO pagamentoAtualizada = pagamentoService.atualizaPagamento(id, pagamentoDTO);
+        return ResponseEntity.ok().body(pagamentoAtualizada);
     }
 
     @DeleteMapping(value = {"/{id}"})
-    public ResponseEntity<Messege> deleteTipoPagamento(@PathVariable Long id){
-        Messege tipoPagamentoExcluida = tipoPagamentoService.deletarTipoPagamento(id);
-        return ResponseEntity.ok().body(tipoPagamentoExcluida);
+    public ResponseEntity<Messege> deletePagamento(@PathVariable Long id){
+        Messege pagamentoExcluida = pagamentoService.deletarPagamento(id);
+        return ResponseEntity.ok().body(pagamentoExcluida);
     }
 }

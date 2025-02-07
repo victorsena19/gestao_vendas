@@ -1,16 +1,8 @@
-package com.java.gestao_vendas.tipo_pagamento.repository;
+package com.java.gestao_vendas.pagamento.repository;
 
-import com.java.gestao_vendas.tipo_pagamento.entity.TipoPagamento;
+import com.java.gestao_vendas.pagamento.entity.Pagamento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface TipoPagamentoRepository extends JpaRepository<TipoPagamento, Long> {
-
-    boolean existsByNomePagamentoIgnoreCase(String nome);
-
-    List<TipoPagamento> findByNomePagamentoContainsIgnoreCase(String nome);
-
-}
+public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {}

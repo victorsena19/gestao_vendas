@@ -1,9 +1,9 @@
-package com.java.gestao_vendas.tipo_pagamento.service;
+package com.java.gestao_vendas.pagamento.service;
 
-import com.java.gestao_vendas.tipo_pagamento.dto.TipoPagamentoDTO;
-import com.java.gestao_vendas.tipo_pagamento.entity.TipoPagamento;
-import com.java.gestao_vendas.tipo_pagamento.mapper.TipoPagamentoMapper;
-import com.java.gestao_vendas.tipo_pagamento.repository.TipoPagamentoRepository;
+import com.java.gestao_vendas.pagamento.dto.PagamentoDTO;
+import com.java.gestao_vendas.pagamento.entity.Pagamento;
+import com.java.gestao_vendas.pagamento.mapper.PagamentoMapper;
+import com.java.gestao_vendas.pagamento.repository.PagamentoRepository;
 import com.java.gestao_vendas.utils.Messege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,53 +12,45 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TipoPagamentoService {
+public class PagamentoService {
 
-    private final TipoPagamentoMapper tipoPagamentoMapper;
-    private final TipoPagamentoRepository tipoPagamentoRepository;
+    private final PagamentoMapper pagamentoMapper;
+    private final PagamentoRepository pagamentoRepository;
 
     @Autowired
-    public TipoPagamentoService(TipoPagamentoRepository tipoPagamentoRepository, TipoPagamentoMapper tipoPagamentoMapper) {
-        this.tipoPagamentoRepository = tipoPagamentoRepository;
-        this.tipoPagamentoMapper = tipoPagamentoMapper;
+    public PagamentoService(PagamentoRepository pagamentoRepository, PagamentoMapper pagamentoMapper) {
+        this.pagamentoRepository = pagamentoRepository;
+        this.pagamentoMapper = pagamentoMapper;
     }
 
-    public List<TipoPagamento> listarTipoPagamentos(){
-        return tipoPagamentoRepository.findAll();
+    public List<Pagamento> listarPagamentos(){
+        return pagamentoRepository.findAll();
     }
 
-    public TipoPagamentoDTO salvarTipoPagamento(TipoPagamentoDTO tipoPagamentoDTO){
-        TipoPagamento novoTipoPagamento = tipoPagamentoMapper.toEntity(tipoPagamentoDTO);
-        TipoPagamento tipoPagamento = tipoPagamentoRepository.save(novoTipoPagamento);
-        return tipoPagamentoMapper.toDTO(tipoPagamento);
+    public PagamentoDTO salvarPagamento(PagamentoDTO pagamentoDTO){
+        Pagamento novoPagamento = pagamentoMapper.toEntity(pagamentoDTO);
+        Pagamento pagamento = pagamentoRepository.save(novoPagamento);
+        return pagamentoMapper.toDTO(pagamento);
     }
 
-    public Messege deletarTipoPagamento(Long id) {
-        Optional<TipoPagamento> tipoPagamento = tipoPagamentoRepository.findById(id);
-        if (tipoPagamento.isPresent()) {
-            tipoPagamentoRepository.delete(tipoPagamento.get());
-            return new Messege("OK!", "TipoPagamento excluido com sucesso!");
+    public Messege deletarPagamento(Long id) {
+        Optional<Pagamento> pagamento = pagamentoRepository.findById(id);
+        if (pagamento.isPresent()) {
+            pagamentoRepository.delete(pagamento.get());
+            return new Messege("OK!", "Pagamento excluido com sucesso!");
         }else{
-            return new Messege("Erro!", "TipoPagamento com o " + id + " não foi encontrado!");
+            return new Messege("Erro!", "Pagamento com o " + id + " não foi encontrado!");
         }
     }
 
-    public TipoPagamentoDTO criarTipoPagamento(TipoPagamentoDTO tipoPagamentoDTO){
-        boolean nomeTipoPagamento = tipoPagamentoRepository.existsByNomePagamentoIgnoreCase(tipoPagamentoDTO.getNomePagamento());
-        if (nomeTipoPagamento){
-            throw new IllegalArgumentException("Tipo de Pagamento " + tipoPagamentoDTO.getNomePagamento() + " já existe");
-        }
-        return salvarTipoPagamento(tipoPagamentoDTO);
+    public PagamentoDTO criarPagamento(PagamentoDTO pagamentoDTO){
+        return salvarPagamento(pagamentoDTO);
     }
 
-    public TipoPagamentoDTO atualizaTipoPagamento(Long id, TipoPagamentoDTO tipoPagamentoDTO){
-        tipoPagamentoRepository.findById(id)
+    public PagamentoDTO atualizaPagamento(Long id, PagamentoDTO pagamentoDTO){
+        pagamentoRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("Não existe esse Tipo de Pagamento com o ID: " + id));
-        boolean nomeTipoPagamento = tipoPagamentoRepository.existsByNomePagamentoIgnoreCase(tipoPagamentoDTO.getNomePagamento());
-        if (nomeTipoPagamento){
-            throw new IllegalArgumentException("Tipo de Pagamento " + tipoPagamentoDTO.getNomePagamento() + " já existe");
-        }
-            return salvarTipoPagamento(tipoPagamentoDTO);
+            return salvarPagamento(pagamentoDTO);
     }
 }
 
