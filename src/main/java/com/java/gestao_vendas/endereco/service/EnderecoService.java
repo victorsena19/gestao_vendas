@@ -44,10 +44,10 @@ public class EnderecoService {
     }
 
     public EnderecoDTO criarEndereco(EnderecoDTO enderecoDTO){
-        List<Endereco> nomeEndereco = enderecoRepository.findByLogradouroContainingIgnoreCase(enderecoDTO.getLogradouro());
-        List<Endereco> numero = enderecoRepository.findByNumero(enderecoDTO.getNumero());
-        if (nomeEndereco != null && numero != null ){
-            throw new IllegalArgumentException("Endereco " + enderecoDTO.getLogradouro() + " com o numero " + numero + " já existe");
+        boolean nomeEndereco = enderecoRepository.existsByLogradouroContainingIgnoreCase(enderecoDTO.getLogradouro());
+        boolean numero = enderecoRepository.existsByNumero(enderecoDTO.getNumero());
+        if (nomeEndereco && numero ){
+            throw new IllegalArgumentException("Endereco " + enderecoDTO.getLogradouro() + " com o numero " + enderecoDTO.getNumero() + " já existe");
         }
         return salvarEndereco(enderecoDTO);
     }

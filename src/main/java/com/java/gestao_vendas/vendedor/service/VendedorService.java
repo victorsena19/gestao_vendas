@@ -32,34 +32,24 @@ public class VendedorService {
         return vendedorMapper.toDTO(vendedor);
     }
 
-    public Messege deletarVendedor(Long id) {
-        Optional<Vendedor> vendedor = vendedorRepository.findById(id);
-        if (vendedor.isPresent()) {
-            vendedorRepository.delete(vendedor.get());
-            return new Messege("OK!", "Vendedor excluido com sucesso!");
-        }else{
-            return new Messege("Erro!", "Vendedor com o " + id + " não foi encontrado!");
-        }
+    public void deletarVendedor(Long id) {
+        Vendedor vendedor = vendedorRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("Não existe um vendedor com esse id: "));
+            vendedorRepository.delete(vendedor);
     }
 
     public VendedorDTO criarVendedor(VendedorDTO vendedorDTO){
-        List<Vendedor> nomeVendedor = vendedorRepository.getNome(vendedorDTO.getPessoa().getNomePessoa());
-        if (nomeVendedor != null){
-            throw new IllegalArgumentException("Vendedor com o nome" + vendedorDTO.getPessoa().getNomePessoa() + "já existe");
-        }
         return salvarVendedor(vendedorDTO);
     }
 
     public VendedorDTO atualizaVendedor(Long id, VendedorDTO vendedorDTO) {
-        Optional<Vendedor> vendedorId = vendedorRepository.findById(id);
-        if (vendedorId.isPresent()) {
-            List<Vendedor> nomeVendedor = vendedorRepository.getNome(vendedorDTO.getPessoa().getNomePessoa());
-            if (nomeVendedor != null) {
-                throw new IllegalArgumentException("Vendedor com o nome" + vendedorDTO.getPessoa().getNomePessoa() + "já existe");
-            }
-            salvarVendedor(vendedorDTO);
-        }
-        throw new IllegalArgumentException("Vendedor com o id" + vendedorDTO.getId() + "não existe");
+        Vendedor vendedorId = vendedorRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("Não existe vendedor com esse id : " + id));
+
+        vendedorId.setDataContratacao(vendedorDTO.getDataContratacao());
+        vendedorId.setComissao(vendedorDTO.getComissao());
+        Vendedor vendedor = vendedorRepository.save(vendedorId);
+        return vendedorMapper.toDTO(vendedor);
     }
 }
 

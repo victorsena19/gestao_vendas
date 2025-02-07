@@ -44,7 +44,7 @@ public class PessoaService {
 
     public PessoaDTO criarPessoa(PessoaDTO pessoaDTO){
         Optional<Pessoa> emailExistente = pessoaRepository.findByEmailIgnoreCase(pessoaDTO.getEmail());
-        Optional<Pessoa> cpfCnpjExistente = pessoaRepository.findBycnpjCpf(pessoaDTO.getCnpjCpf());
+        Optional<Pessoa> cpfCnpjExistente = pessoaRepository.findByCnpjCpf(pessoaDTO.getCnpjCpf());
         if (emailExistente.isPresent()){
             throw new IllegalArgumentException("Pessoa com o email " + pessoaDTO.getEmail() + " já existe");
         }
@@ -59,7 +59,7 @@ public class PessoaService {
         Optional<Pessoa> pessoaId = pessoaRepository.findById(id);
         if (pessoaId.isPresent()) {
             Optional<Pessoa> emailPessoa = pessoaRepository.findByEmailIgnoreCase(pessoaDTO.getEmail());
-            Optional<Pessoa> cpfCnpj = pessoaRepository.findBycnpjCpf(pessoaDTO.getCnpjCpf());
+            Optional<Pessoa> cpfCnpj = pessoaRepository.findByCnpjCpf(pessoaDTO.getCnpjCpf());
             if (emailPessoa.isPresent()){
                 throw new IllegalArgumentException("Pessoa com o email" + pessoaDTO.getEmail() + "já existe existe");
 
@@ -69,7 +69,7 @@ public class PessoaService {
             }
             salvarPessoa(pessoaDTO);
         }
-        throw new IllegalArgumentException("Pessoa com o id" + pessoaDTO.getIdPessoa() + "não existe");
+        throw new IllegalArgumentException("Pessoa com o id" + pessoaDTO.getId() + "não existe");
     }
 }
 

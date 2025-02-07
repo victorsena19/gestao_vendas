@@ -44,6 +44,7 @@ public class CriancaService {
     }
 
     public CriancaDTO criarCrianca(CriancaDTO criancaDTO){
+        System.out.println(criancaDTO);
         return salvarCrianca(criancaDTO);
     }
 
