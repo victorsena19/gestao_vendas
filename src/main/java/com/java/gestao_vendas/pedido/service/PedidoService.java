@@ -1,13 +1,17 @@
 package com.java.gestao_vendas.pedido.service;
 
+import com.java.gestao_vendas.pagamento.entity.Pagamento;
 import com.java.gestao_vendas.pedido.dto.PedidoDTO;
 import com.java.gestao_vendas.pedido.entity.Pedido;
 import com.java.gestao_vendas.pedido.mapper.PedidoMapper;
 import com.java.gestao_vendas.pedido.repository.PedidoRepository;
+import com.java.gestao_vendas.tipo_pagamento.entity.TipoPagamento;
+import com.java.gestao_vendas.tipo_pagamento.repository.TipoPagamentoRepository;
 import com.java.gestao_vendas.utils.Messege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,11 +19,13 @@ import java.util.Optional;
 public class PedidoService {
     private final PedidoMapper pedidoMapper;
     private final PedidoRepository pedidoRepository;
+    private TipoPagamentoRepository tipoPagamentoRepository;
 
     @Autowired
-    public PedidoService(PedidoMapper pedidoMapper, PedidoRepository pedidoRepository){
+    public PedidoService(PedidoMapper pedidoMapper, PedidoRepository pedidoRepository, TipoPagamentoRepository tipoPagamentoRepository){
         this.pedidoMapper = pedidoMapper;
         this.pedidoRepository = pedidoRepository;
+        this.tipoPagamentoRepository = tipoPagamentoRepository;
     }
 
     public List<Pedido> listarPedidos(){
@@ -43,7 +49,17 @@ public class PedidoService {
     }
 
     public PedidoDTO criarPedido(PedidoDTO pedidoDTO){
-        return salvarPedido(pedidoDTO);
+        Pedido pedido = pedidoMapper.toEntity(pedidoDTO);
+        pedido.setDataPedido(LocalDateTime.now());
+        TipoPagamento tipoPagamento = tipoPagamentoRepository.findById(pedido.getPagamento().getTipoPagamento().getId())
+                .orElseThrow(()-> new IllegalArgumentException("não existe esse tipo pagamento com esse ID: " + pedido.getPagamento().getTipoPagamento().getId()));
+        Pagamento pagamento = new Pagamento();
+        pagamento.setTipoPagamento(tipoPagamento);
+        pagamento.setParcelamento(pedido.getPagamento().getParcelamento());
+        pagamento.setValorPago(pedido.getPagamento().getValorPago());
+
+        PedidoDTO novoPedidoDTO = pedidoMapper.toDTO(pedido);
+        return salvarPedido(novoPedidoDTO);
     }
 
     public PedidoDTO atualizaPedido(Long id, PedidoDTO pedidoDTO) {
@@ -51,7 +67,7 @@ public class PedidoService {
         if (pedidoId.isPresent()) {
             salvarPedido(pedidoDTO);
         }
-        throw new IllegalArgumentException("Pedido com o id" + pedidoDTO.getIdPedido() + "não existe");
+        throw new IllegalArgumentException("Pedido com o id" + pedidoDTO.getId() + "não existe");
     }
 }
 
