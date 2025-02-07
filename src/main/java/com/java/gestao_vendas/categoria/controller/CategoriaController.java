@@ -3,7 +3,7 @@ package com.java.gestao_vendas.categoria.controller;
 import com.java.gestao_vendas.categoria.dto.CategoriaDTO;
 import com.java.gestao_vendas.categoria.entity.Categoria;
 import com.java.gestao_vendas.categoria.service.CategoriaService;
-import com.java.gestao_vendas.utils.Messege;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,21 +29,21 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoriaDTO> criarCategoria(CategoriaDTO categoriaDTO){
+    public ResponseEntity<CategoriaDTO> criarCategoria(@Valid @RequestBody CategoriaDTO categoriaDTO){
         CategoriaDTO novaCategoria = categoriaService.criarCategoria(categoriaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaCategoria);
     }
 
-    @PutMapping(value = {"{/id}"})
-    public ResponseEntity<CategoriaDTO> atualizaCategoria(@PathVariable Long id, @RequestParam CategoriaDTO categoriaDTO){
+    @PutMapping(value = {"/{id}"})
+    public ResponseEntity<CategoriaDTO> atualizaCategoria(@Valid @PathVariable Long id, @RequestBody CategoriaDTO categoriaDTO){
         CategoriaDTO categoriaAtualizada = categoriaService.atualizaCategoria(id, categoriaDTO);
         return ResponseEntity.ok().body(categoriaAtualizada);
     }
 
     @DeleteMapping(value = {"/{id}"})
-    public ResponseEntity<Messege> deleteCategoria(@PathVariable Long id){
-        Messege categoriaExcluida = categoriaService.deletarCategoria(id);
-       return ResponseEntity.ok().body(categoriaExcluida);
+    public ResponseEntity<Void> deleteCategoria(@PathVariable Long id){
+         categoriaService.deletarCategoria(id);
+       return ResponseEntity.noContent().build();
     }
 
 }
