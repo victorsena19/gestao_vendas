@@ -1,14 +1,14 @@
-package com.java.gestao_vendas.status_pagamento.mapper;
+package com.java.gestao_vendas.tipo_pagamento.mapper;
 
-import com.java.gestao_vendas.status_pagamento.dto.StatusPagamentoDTO;
-import com.java.gestao_vendas.status_pagamento.entity.StatusPagamento;
+import com.java.gestao_vendas.tipo_pagamento.dto.TipoPagamentoDTO;
+import com.java.gestao_vendas.tipo_pagamento.entity.TipoPagamento;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
-public interface StatusPagamentoMapper {
-    StatusPagamentoMapper INSTANCE = Mappers.getMapper(StatusPagamentoMapper.class);
+public interface TipoPagamentoMapper {
+    TipoPagamentoMapper INSTANCE = Mappers.getMapper(TipoPagamentoMapper.class);
 
-    StatusPagamentoDTO toDTO(StatusPagamento statusPagamento);
-    StatusPagamento toEntity(StatusPagamentoDTO statusPagamentoDTO);
+    TipoPagamentoDTO toDTO(TipoPagamento tipoPagamento);
+    TipoPagamento toEntity(TipoPagamentoDTO tipoPagamentoDTO);
 }

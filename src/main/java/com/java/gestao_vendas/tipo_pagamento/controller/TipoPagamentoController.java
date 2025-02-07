@@ -1,8 +1,8 @@
-package com.java.gestao_vendas.endereco.controller;
+package com.java.gestao_vendas.tipo_pagamento.controller;
 
-import com.java.gestao_vendas.endereco.dto.EnderecoDTO;
-import com.java.gestao_vendas.endereco.entity.Endereco;
-import com.java.gestao_vendas.endereco.service.EnderecoService;
+import com.java.gestao_vendas.tipo_pagamento.dto.TipoPagamentoDTO;
+import com.java.gestao_vendas.tipo_pagamento.entity.TipoPagamento;
+import com.java.gestao_vendas.tipo_pagamento.service.TipoPagamentoService;
 import com.java.gestao_vendas.utils.Messege;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,37 +13,37 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/endereco")
-public class EnderecoController {
+@RequestMapping("/tipopagamento")
+public class TipoPagamentoController {
 
-    public EnderecoService enderecoService;
+    public TipoPagamentoService tipoPagamentoService;
 
     @Autowired
-    public EnderecoController(EnderecoService enderecoService){
-        this.enderecoService = enderecoService;
+    public TipoPagamentoController(TipoPagamentoService tipoPagamentoService){
+        this.tipoPagamentoService = tipoPagamentoService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Endereco>> listarEnderecos(){
-        List<Endereco> enderecos = enderecoService.listarEnderecos();
-        return ResponseEntity.ok(enderecos);
+    public ResponseEntity<List<TipoPagamento>> listarTipoPagamentos(){
+        List<TipoPagamento> tipoPagamentos = tipoPagamentoService.listarTipoPagamentos();
+        return ResponseEntity.ok(tipoPagamentos);
     }
 
     @PostMapping
-    public ResponseEntity<EnderecoDTO> criarEndereco(@Valid @RequestBody EnderecoDTO enderecoDTO){
-        EnderecoDTO novaEndereco = enderecoService.criarEndereco(enderecoDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novaEndereco);
+    public ResponseEntity<TipoPagamentoDTO> criarTipoPagamento(@Valid @RequestBody TipoPagamentoDTO tipoPagamentoDTO){
+        TipoPagamentoDTO novaTipoPagamento = tipoPagamentoService.criarTipoPagamento(tipoPagamentoDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novaTipoPagamento);
     }
 
     @PutMapping(value = {"/{id}"})
-    public ResponseEntity<EnderecoDTO> atualizaEndereco(@Valid @PathVariable Long id, @RequestParam EnderecoDTO enderecoDTO){
-        EnderecoDTO enderecoAtualizada = enderecoService.atualizaEndereco(id, enderecoDTO);
-        return ResponseEntity.ok().body(enderecoAtualizada);
+    public ResponseEntity<TipoPagamentoDTO> atualizaTipoPagamento(@Valid @PathVariable Long id, @RequestParam TipoPagamentoDTO tipoPagamentoDTO){
+        TipoPagamentoDTO tipoPagamentoAtualizada = tipoPagamentoService.atualizaTipoPagamento(id, tipoPagamentoDTO);
+        return ResponseEntity.ok().body(tipoPagamentoAtualizada);
     }
 
     @DeleteMapping(value = {"/{id}"})
-    public ResponseEntity<Messege> deleteEndereco(@PathVariable Long id){
-        Messege enderecoExcluida = enderecoService.deletarEndereco(id);
-        return ResponseEntity.ok().body(enderecoExcluida);
+    public ResponseEntity<Messege> deleteTipoPagamento(@PathVariable Long id){
+        Messege tipoPagamentoExcluida = tipoPagamentoService.deletarTipoPagamento(id);
+        return ResponseEntity.ok().body(tipoPagamentoExcluida);
     }
 }

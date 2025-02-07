@@ -1,9 +1,9 @@
-package com.java.gestao_vendas.endereco.service;
+package com.java.gestao_vendas.tipo_pagamento.service;
 
-import com.java.gestao_vendas.endereco.dto.EnderecoDTO;
-import com.java.gestao_vendas.endereco.entity.Endereco;
-import com.java.gestao_vendas.endereco.mapper.EnderecoMapper;
-import com.java.gestao_vendas.endereco.repository.EnderecoRepository;
+import com.java.gestao_vendas.tipo_pagamento.dto.TipoPagamentoDTO;
+import com.java.gestao_vendas.tipo_pagamento.entity.TipoPagamento;
+import com.java.gestao_vendas.tipo_pagamento.mapper.TipoPagamentoMapper;
+import com.java.gestao_vendas.tipo_pagamento.repository.TipoPagamentoRepository;
 import com.java.gestao_vendas.utils.Messege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,57 +12,53 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EnderecoService {
+public class TipoPagamentoService {
 
-    private final EnderecoMapper enderecoMapper;
-    private final EnderecoRepository enderecoRepository;
+    private final TipoPagamentoMapper tipoPagamentoMapper;
+    private final TipoPagamentoRepository tipoPagamentoRepository;
 
     @Autowired
-    public EnderecoService(EnderecoRepository enderecoRepository, EnderecoMapper enderecoMapper) {
-        this.enderecoRepository = enderecoRepository;
-        this.enderecoMapper = enderecoMapper;
+    public TipoPagamentoService(TipoPagamentoRepository tipoPagamentoRepository, TipoPagamentoMapper tipoPagamentoMapper) {
+        this.tipoPagamentoRepository = tipoPagamentoRepository;
+        this.tipoPagamentoMapper = tipoPagamentoMapper;
     }
 
-    public List<Endereco> listarEnderecos(){
-        return enderecoRepository.findAll();
+    public List<TipoPagamento> listarTipoPagamentos(){
+        return tipoPagamentoRepository.findAll();
     }
 
-    public EnderecoDTO salvarEndereco(EnderecoDTO enderecoDTO){
-        Endereco novoEndereco = enderecoMapper.toEntity(enderecoDTO);
-        Endereco endereco = enderecoRepository.save(novoEndereco);
-        return enderecoMapper.toDTO(endereco);
+    public TipoPagamentoDTO salvarTipoPagamento(TipoPagamentoDTO tipoPagamentoDTO){
+        TipoPagamento novoTipoPagamento = tipoPagamentoMapper.toEntity(tipoPagamentoDTO);
+        TipoPagamento tipoPagamento = tipoPagamentoRepository.save(novoTipoPagamento);
+        return tipoPagamentoMapper.toDTO(tipoPagamento);
     }
 
-    public Messege deletarEndereco(Long id) {
-        Optional<Endereco> endereco = enderecoRepository.findById(id);
-        if (endereco.isPresent()) {
-            enderecoRepository.delete(endereco.get());
-            return new Messege("OK!", "Endereco excluido com sucesso!");
+    public Messege deletarTipoPagamento(Long id) {
+        Optional<TipoPagamento> tipoPagamento = tipoPagamentoRepository.findById(id);
+        if (tipoPagamento.isPresent()) {
+            tipoPagamentoRepository.delete(tipoPagamento.get());
+            return new Messege("OK!", "TipoPagamento excluido com sucesso!");
         }else{
-            return new Messege("Erro!", "Endereco com o " + id + " não foi encontrado!");
+            return new Messege("Erro!", "TipoPagamento com o " + id + " não foi encontrado!");
         }
     }
 
-    public EnderecoDTO criarEndereco(EnderecoDTO enderecoDTO){
-        boolean nomeEndereco = enderecoRepository.existsByLogradouroContainingIgnoreCase(enderecoDTO.getLogradouro());
-        boolean numero = enderecoRepository.existsByNumero(enderecoDTO.getNumero());
-        if (nomeEndereco && numero ){
-            throw new IllegalArgumentException("Endereco " + enderecoDTO.getLogradouro() + " com o numero " + enderecoDTO.getNumero() + " já existe");
+    public TipoPagamentoDTO criarTipoPagamento(TipoPagamentoDTO tipoPagamentoDTO){
+        boolean nomeTipoPagamento = tipoPagamentoRepository.existsByNomePagamentoIgnoreCase(tipoPagamentoDTO.getNomePagamento());
+        if (nomeTipoPagamento){
+            throw new IllegalArgumentException("Tipo de Pagamento " + tipoPagamentoDTO.getNomePagamento() + " já existe");
         }
-        return salvarEndereco(enderecoDTO);
+        return salvarTipoPagamento(tipoPagamentoDTO);
     }
 
-    public EnderecoDTO atualizaEndereco(Long id, EnderecoDTO enderecoDTO){
-        Optional<Endereco> enderecoId = enderecoRepository.findById(id);
-        if(enderecoId.isPresent()){
-            List<Endereco> nomeEndereco = enderecoRepository.findByLogradouroContainingIgnoreCase(enderecoDTO.getLogradouro());
-            List<Endereco> numero = enderecoRepository.findByNumero(enderecoDTO.getNumero());
-            if (nomeEndereco != null && numero != null){
-                throw new IllegalArgumentException("Endereco " + enderecoDTO.getLogradouro() + " com o numero " + numero + " já existe");
-            }
-            salvarEndereco(enderecoDTO);
+    public TipoPagamentoDTO atualizaTipoPagamento(Long id, TipoPagamentoDTO tipoPagamentoDTO){
+        tipoPagamentoRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("Não existe esse Tipo de Pagamento com o ID: " + id));
+        boolean nomeTipoPagamento = tipoPagamentoRepository.existsByNomePagamentoIgnoreCase(tipoPagamentoDTO.getNomePagamento());
+        if (nomeTipoPagamento){
+            throw new IllegalArgumentException("Tipo de Pagamento " + tipoPagamentoDTO.getNomePagamento() + " já existe");
         }
-        throw new IllegalArgumentException("Endereco com o id " + enderecoDTO.getId() + " não existe");
+            return salvarTipoPagamento(tipoPagamentoDTO);
     }
 }
 

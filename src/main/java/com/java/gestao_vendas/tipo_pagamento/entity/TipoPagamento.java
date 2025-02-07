@@ -5,18 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
 @Table(name = "tipos_pagamentos")
-public class TipoPagamento implements Serializable {
+public class TipoPagamento extends Persistence {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "nome_pagamento")
     private String nomePagamento;
+
 }
