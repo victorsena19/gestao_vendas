@@ -50,86 +50,6 @@ public class VendaService {
         return vendaRepository.findAll();
     }
 
-    public void salvarVenda(VendaDTO vendaDTO){
-        Venda novaVenda = vendaMapper.toEntity(vendaDTO);
-        Venda venda = vendaRepository.save(novaVenda);
-        vendaMapper.toDTO(venda);
-    }
-
-    public void deletarVenda(Long id) {
-        Venda venda = vendaRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Nâo existe um uma venda com esse id: " + id));
-        vendaRepository.delete(venda);
-    }
-
-    public VendaDTO atualizaVenda(Long id, VendaDTO vendaDTO) {
-        // Verifica se a venda existe
-        Venda vendaExistente = vendaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Não existe uma venda com esse id: " + id));
-
-        // Atualiza os dados da venda
-        Venda vendaAtualizada = vendaMapper.toEntity(vendaDTO);
-        vendaAtualizada.setId(vendaExistente.getId());
-
-        // Salva a venda atualizada
-        Venda vendaSalva = vendaRepository.save(vendaAtualizada);
-
-        return vendaMapper.toDTO(vendaSalva);
-    }
-
-    public VendaDTO criarVenda(VendaDTO vendaDTO) {
-        Venda venda = vendaMapper.toEntity(vendaDTO);
-
-        // Define a data da venda
-        venda.setDataVenda(LocalDateTime.now());
-
-        List<Item> itens = venda.getItem().stream().map((item)->{
-        Produto produto = produtoRepository.findById(item.getProduto().getId()).orElseThrow(() ->
-                new IllegalArgumentException("Não existe um produto com esse ID: " + item.getProduto().getId()));
-
-        Item novoItem = new Item();
-            novoItem.setProduto(produto);
-            novoItem.setQuantidade(item.getQuantidade());
-            novoItem.setDesconto(item.getDesconto());
-            novoItem.setPrecoUnitario(produto.getPreco());
-        BigDecimal valorSemDesconto = produto.getPreco().multiply(BigDecimal.valueOf(item.getQuantidade()));
-        BigDecimal desconto = (item.getDesconto().divide(BigDecimal.valueOf(100)).multiply(valorSemDesconto));
-        BigDecimal valorTotal = (valorSemDesconto.subtract(desconto));
-            novoItem.setValorTotal(valorTotal);
-            novoItem.setVenda(venda);
-
-            //Atualiza saldo no estoque
-            int tirarQuantidadeProdutoEstoque = produto.getQuantidadeEstoque()-item.getQuantidade();
-            produto.setQuantidadeEstoque(tirarQuantidadeProdutoEstoque);
-            return novoItem;
-        }).collect(Collectors.toList());
-
-        venda.setItem(itens);
-
-        List<Pagamento> pagamentos = venda.getPagamento().stream().map((pagamento)->{
-            TipoPagamento tipoPagamento = tipoPagamentoRepository.findById(pagamento.getTipoPagamento().getId()).orElseThrow(() ->
-                    new IllegalArgumentException("Não existe um produto com esse ID: " + pagamento.getTipoPagamento().getId()));
-
-            Pagamento novoPagamento = new Pagamento();
-            novoPagamento.setTipoPagamento(tipoPagamento);
-            novoPagamento.setVenda(venda);
-            novoPagamento.setValorPago(pagamento.getValorPago());
-            novoPagamento.setParcelamento(pagamento.getParcelamento());
-
-            return novoPagamento;
-        }).collect(Collectors.toList());
-
-        venda.setPagamento(pagamentos);
-
-        calcularVenda(venda);
-        calcularPagamentoRestante(venda);
-
-        // Salva a venda no banco
-        Venda vendaSalva = vendaRepository.save(venda);
-
-        // Retorna o DTO da venda salva
-        return vendaMapper.toDTO(vendaSalva);
-    }
-
     private BigDecimal calcularTotalSemDesconto(List<Item> itens) {
         return itens.stream()
                 .map(item -> item.getPrecoUnitario().multiply(BigDecimal.valueOf(item.getQuantidade())))
@@ -199,6 +119,80 @@ public class VendaService {
         } else {
             venda.setStatusVenda(StatusVenda.PAGO);
         }
+    }
+
+    public VendaDTO criarVenda(VendaDTO vendaDTO) {
+        Venda venda = vendaMapper.toEntity(vendaDTO);
+
+        // Define a data da venda
+        venda.setDataVenda(LocalDateTime.now());
+
+        List<Item> itens = venda.getItem().stream().map((item)->{
+            Produto produto = produtoRepository.findById(item.getProduto().getId()).orElseThrow(() ->
+                    new IllegalArgumentException("Não existe um produto com esse ID: " + item.getProduto().getId()));
+
+            Item novoItem = new Item();
+            novoItem.setProduto(produto);
+            novoItem.setQuantidade(item.getQuantidade());
+            novoItem.setDesconto(item.getDesconto());
+            novoItem.setPrecoUnitario(produto.getPreco());
+            BigDecimal valorSemDesconto = produto.getPreco().multiply(BigDecimal.valueOf(item.getQuantidade()));
+            BigDecimal desconto = (item.getDesconto().divide(BigDecimal.valueOf(100)).multiply(valorSemDesconto));
+            BigDecimal valorTotal = (valorSemDesconto.subtract(desconto));
+            novoItem.setValorTotal(valorTotal);
+            novoItem.setVenda(venda);
+
+            //Atualiza saldo no estoque
+            int tirarQuantidadeProdutoEstoque = produto.getQuantidadeEstoque()-item.getQuantidade();
+            produto.setQuantidadeEstoque(tirarQuantidadeProdutoEstoque);
+            return novoItem;
+        }).collect(Collectors.toList());
+
+        venda.getItem().addAll(itens);
+
+        List<Pagamento> pagamentos = venda.getPagamento().stream().map((pagamento)->{
+            TipoPagamento tipoPagamento = tipoPagamentoRepository.findById(pagamento.getTipoPagamento().getId()).orElseThrow(() ->
+                    new IllegalArgumentException("Não existe um produto com esse ID: " + pagamento.getTipoPagamento().getId()));
+
+            Pagamento novoPagamento = new Pagamento();
+            novoPagamento.setTipoPagamento(tipoPagamento);
+            novoPagamento.setVenda(venda);
+            novoPagamento.setValorPago(pagamento.getValorPago());
+            novoPagamento.setParcelamento(pagamento.getParcelamento());
+
+            return novoPagamento;
+        }).collect(Collectors.toList());
+
+        venda.getPagamento().addAll(pagamentos);
+
+        calcularVenda(venda);
+        calcularPagamentoRestante(venda);
+
+        // Salva a venda no banco
+        Venda vendaSalva = vendaRepository.save(venda);
+
+        // Retorna o DTO da venda salva
+        return vendaMapper.toDTO(vendaSalva);
+    }
+
+    public VendaDTO atualizaVenda(Long id, VendaDTO vendaDTO) {
+        // Verifica se a venda existe
+        Venda vendaExistente = vendaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Não existe uma venda com esse id: " + id));
+
+        // Atualiza os dados da venda
+        Venda vendaAtualizada = vendaMapper.toEntity(vendaDTO);
+        vendaAtualizada.setId(vendaExistente.getId());
+
+        // Salva a venda atualizada
+        Venda vendaSalva = vendaRepository.save(vendaAtualizada);
+
+        return vendaMapper.toDTO(vendaSalva);
+    }
+
+    public void deletarVenda(Long id) {
+        Venda venda = vendaRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Nâo existe um uma venda com esse id: " + id));
+        vendaRepository.delete(venda);
     }
 
 }

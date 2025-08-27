@@ -21,7 +21,7 @@ public class EmailService {
 
             helper.setTo(email);
             helper.setSubject("Redefinir sua senha");
-            helper.setFrom("pcoe@sistema.com");
+            helper.setFrom("gestao_vendas@sistema.com");
 
             String htmlContent = carregarTemplateEmail(nomeUsuario, linkRedefinicao);
             helper.setText(htmlContent, true);
