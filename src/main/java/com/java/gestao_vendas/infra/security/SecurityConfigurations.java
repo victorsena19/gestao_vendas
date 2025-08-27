@@ -1,7 +1,7 @@
 package com.java.gestao_vendas.infra.security;
 
-import com.java.gestao_vendas.tentativa_login.TentativaLoginService;
-import com.java.gestao_vendas.usuario.service.UsuarioService;
+import com.java.gestao_vendas.service.TentativaLoginService;
+import com.java.gestao_vendas.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

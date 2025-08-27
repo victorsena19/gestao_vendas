@@ -1,8 +1,6 @@
 package com.java.gestao_vendas.venda;
 
 
-import com.java.gestao_vendas.item.dto.ItemDTO;
-
 import static org.junit.Assert.assertEquals;
 
 public class VendaServiceTest {

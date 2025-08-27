@@ -1,6 +1,6 @@
 package com.java.gestao_vendas.infra.security;
 
-import com.java.gestao_vendas.tentativa_login.TentativaLoginService;
+import com.java.gestao_vendas.service.TentativaLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;

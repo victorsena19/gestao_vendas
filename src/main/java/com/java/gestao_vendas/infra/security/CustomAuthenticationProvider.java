@@ -1,8 +1,8 @@
 package com.java.gestao_vendas.infra.security;
 
-import com.java.gestao_vendas.global_exception.model.MensagemException;
-import com.java.gestao_vendas.tentativa_login.TentativaLoginService;
-import com.java.gestao_vendas.usuario.service.UsuarioService;
+import com.java.gestao_vendas.global_exception.MensagemException;
+import com.java.gestao_vendas.service.TentativaLoginService;
+import com.java.gestao_vendas.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

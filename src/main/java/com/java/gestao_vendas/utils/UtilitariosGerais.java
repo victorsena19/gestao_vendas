@@ -1,7 +1,7 @@
 package com.java.gestao_vendas.utils;
 
-import com.java.gestao_vendas.global_exception.model.MensagemException;
-import com.java.gestao_vendas.utils.enums.MensagensErrosGenericas;
+import com.java.gestao_vendas.global_exception.MensagemException;
+import com.java.gestao_vendas.enums.MensagensErrosGenericas;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 

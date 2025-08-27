@@ -1,0 +1,14 @@
+package com.java.gestao_vendas.mapper;
+
+import com.java.gestao_vendas.dto.PessoaDTO;
+import com.java.gestao_vendas.model.Pessoa;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
+@Mapper(componentModel = "spring")
+public interface PessoaMapper {
+    PessoaMapper INSTANCE = Mappers.getMapper(PessoaMapper.class);
+
+    PessoaDTO toDTO(Pessoa pessoa);
+    Pessoa toEntity(PessoaDTO pessoaDTO);
+}
