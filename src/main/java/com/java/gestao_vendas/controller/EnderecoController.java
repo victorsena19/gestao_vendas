@@ -1,7 +1,5 @@
 package com.java.gestao_vendas.controller;
 
-import com.java.gestao_vendas.dto.EnderecoDTO;
-import com.java.gestao_vendas.model.Endereco;
 import com.java.gestao_vendas.service.EnderecoService;
 import com.java.gestao_vendas.utils.Messege;
 import jakarta.validation.Valid;

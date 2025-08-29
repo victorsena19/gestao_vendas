@@ -33,12 +33,10 @@ public class Item extends Persistence {
 
     private BigDecimal desconto;
 
-    @Column(name = "valor_total_produto")
+    @Column(name = "preco_unitario")
     private BigDecimal precoUnitario;
 
     @Column(name = "valor_total")
     private BigDecimal valorTotal;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Empresa empresa;
 }

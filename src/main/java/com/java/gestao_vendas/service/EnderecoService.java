@@ -1,8 +1,5 @@
 package com.java.gestao_vendas.service;
 
-import com.java.gestao_vendas.dto.EnderecoDTO;
-import com.java.gestao_vendas.model.Endereco;
-import com.java.gestao_vendas.mapper.EnderecoMapper;
 import com.java.gestao_vendas.repository.EnderecoRepository;
 import com.java.gestao_vendas.utils.Messege;
 import org.springframework.beans.factory.annotation.Autowired;

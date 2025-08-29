@@ -26,8 +26,4 @@ public class Categoria extends Persistence {
     private List<Produto> produto;
     private String descricao;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "empresa_id")
-    private Empresa empresa;
-
 }

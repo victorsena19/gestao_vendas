@@ -41,7 +41,4 @@ public class NotaFiscal implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Venda venda;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Empresa empresa;
-
 }

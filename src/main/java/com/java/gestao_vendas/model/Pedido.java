@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "pedidos")
 public class Pedido implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String produto;
@@ -34,9 +34,5 @@ public class Pedido implements Serializable {
 
     @Column(name = "data_pedido")
     private LocalDateTime dataPedido;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "empresa_id")
-    private Empresa empresa;
 
 }

@@ -1,6 +1,6 @@
 package com.java.gestao_vendas.service;
 import com.java.gestao_vendas.model.Categoria;
-import com.java.gestao_vendas.model.CategoriaRepository;
+import com.java.gestao_vendas.repository.CategoriaRepository;
 import com.java.gestao_vendas.dto.ProdutoDTO;
 import com.java.gestao_vendas.model.Produto;
 import com.java.gestao_vendas.mapper.ProdutoMapper;

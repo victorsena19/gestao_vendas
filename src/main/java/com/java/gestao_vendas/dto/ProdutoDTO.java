@@ -15,19 +15,17 @@ public class ProdutoDTO {
     @NotEmpty
     @NotNull
     @Size(max = 100)
-    private String nomeProduto;
-    @Size(max = 200)
-    private String descricao;
+    private String nome;
     @NotNull
     private BigDecimal preco;
     @NotNull
     private int quantidadeEstoque;
     private BigDecimal aliquotaIpi;
     private BigDecimal aliquotaIcms;
-    private String ncmProduto;
+    private String ncm;
     @NotNull
     private CategoriaDTO categoria;
     @NotNull
-    private PessoaDTO pessoa;
+    private PessoaDTO fornecedor;
 
 }

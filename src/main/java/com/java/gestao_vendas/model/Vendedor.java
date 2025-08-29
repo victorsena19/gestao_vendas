@@ -29,8 +29,5 @@ public class Vendedor extends Persistence {
     @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Empresa empresa;
-
 }
 

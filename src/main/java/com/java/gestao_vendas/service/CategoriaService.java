@@ -3,7 +3,7 @@ package com.java.gestao_vendas.service;
 import com.java.gestao_vendas.dto.CategoriaDTO;
 import com.java.gestao_vendas.model.Categoria;
 import com.java.gestao_vendas.mapper.CategoriaMapper;
-import com.java.gestao_vendas.model.CategoriaRepository;
+import com.java.gestao_vendas.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

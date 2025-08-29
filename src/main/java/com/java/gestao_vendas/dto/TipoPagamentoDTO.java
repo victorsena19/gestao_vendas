@@ -12,5 +12,5 @@ public class TipoPagamentoDTO{
     private Long id;
     @NotNull
     @NotEmpty
-    private String nomePagamento;
+    private String nome;
 }

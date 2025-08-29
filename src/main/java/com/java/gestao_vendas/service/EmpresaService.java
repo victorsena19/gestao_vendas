@@ -1,8 +1,5 @@
 package com.java.gestao_vendas.service;
 
-import com.java.gestao_vendas.dto.EmpresaDTO;
-import com.java.gestao_vendas.model.Empresa;
-import com.java.gestao_vendas.mapper.EmpresaMapper;
 import com.java.gestao_vendas.repository.EmpresaRepository;
 import com.java.gestao_vendas.utils.Messege;
 import org.springframework.beans.factory.annotation.Autowired;

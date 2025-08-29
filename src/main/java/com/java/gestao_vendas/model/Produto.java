@@ -20,11 +20,7 @@ public class Produto extends Persistence {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name  = "nome_produto")
-    private String nomeProduto;
-
-    @Column(name = "descricao_produto")
-    private String descricao;
+    private String nome;
 
     @Column(name = "preco_produto")
     private BigDecimal preco;
@@ -38,8 +34,7 @@ public class Produto extends Persistence {
     @Column(name = "aliquota_icms")
     private BigDecimal aliquotaIcms;
 
-    @Column(name = "ncm_produto")
-    private String ncmProduto;
+    private String ncm;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "categoria_id")
@@ -47,9 +42,6 @@ public class Produto extends Persistence {
     private Categoria categoria;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    private Pessoa pessoa;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Empresa empresa;
+    private Pessoa fornecedor;
 
 }

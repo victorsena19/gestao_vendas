@@ -1,13 +1,18 @@
 package com.java.gestao_vendas.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.java.gestao_vendas.enums.TipoPessoa;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "pessoas")
 public class Pessoa  extends Persistence {
     @Id
@@ -17,10 +22,7 @@ public class Pessoa  extends Persistence {
     @Column(name = "cnpj_cpf")
     private String cnpjCpf;
 
-    @Column(name = "nome_pessoa")
-    private String nomePessoa;
-
-    private String email;
+    private String nome;
 
     private String telefone;
 
@@ -28,18 +30,11 @@ public class Pessoa  extends Persistence {
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinColumn(name = "endereco_id")
-    private Endereco endereco;
+    private String endereco;
 
     private boolean fornecedor;
 
     @Column(name = "tipo_pessoa")
-    private int tipoPessoa;
+    private TipoPessoa tipoPessoa;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "empresa_id")
-    private Empresa empresa;
-
-    public Pessoa() {}
 }

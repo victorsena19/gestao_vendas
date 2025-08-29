@@ -38,8 +38,4 @@ public class CupomFiscal implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "venda_id")
     private Venda venda;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "empresa_id")
-    private Empresa empresa;
 }

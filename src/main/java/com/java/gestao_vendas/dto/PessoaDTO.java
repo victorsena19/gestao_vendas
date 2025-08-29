@@ -32,7 +32,7 @@ public class PessoaDTO{
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
     @NotNull
-    private EnderecoDTO endereco;
+    private String endereco;
     @NotNull
     private boolean fornecedor;
     @NotNull

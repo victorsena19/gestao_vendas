@@ -23,8 +23,6 @@ public class Pagamento extends Persistence {
     @JoinColumn(name = "tipo_pagamento_id")
     private TipoPagamento tipoPagamento;
 
-    private int parcelamento;
-
     @Column(name = "valor_pago")
     private BigDecimal valorPago;
 

@@ -35,6 +35,8 @@ public class VendaDTO{
     @PositiveOrZero
     private BigDecimal restanteVenda;
     @NotNull
+    private int parcelamento;
+    @NotNull
     private PessoaDTO pessoa;
     @NotNull
     private VendedorDTO vendedor;

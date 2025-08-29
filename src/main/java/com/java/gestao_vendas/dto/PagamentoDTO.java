@@ -14,7 +14,5 @@ public class PagamentoDTO {
     private Long id;
     private TipoPagamento tipoPagamento;
     @NotNull
-    private int parcelamento;
-    @NotNull
     private BigDecimal valorPago;
 }

@@ -16,7 +16,6 @@ public class TipoPagamento extends Persistence {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "nome_pagamento")
-    private String nomePagamento;
+    private String nome;
 
 }

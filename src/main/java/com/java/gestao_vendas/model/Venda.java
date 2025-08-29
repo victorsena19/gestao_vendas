@@ -61,8 +61,6 @@ public class Venda extends Persistence {
     @JoinColumn(name = "vendedor_id")
     private Vendedor vendedor;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "empresa_id")
-    private Empresa empresa;
+    private int parcelamento;
 }
 
